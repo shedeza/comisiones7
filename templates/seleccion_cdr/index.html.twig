@@ -1,0 +1,110 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}SeleccionCdr{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Selección Comisión Dictaminadora de Recursos</h1>
+
+    <ul class="list-unstyled list-inline float-end">
+        {% if seleccion_cdrs | length <= 0 %}
+            <li class="list-inline-item"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insaculacion"><i class="bi bi-dice-6"></i> Seleccionar Candidatos </button></li>
+        {% else %} 
+            <!-- Button trigger modal -->
+            <a href="{{ path('seleccion_cdr_download') }}" class="btn btn-success btn-sm"><i class="bi bi-download"></i> Descargar </a>
+            <li class="list-inline-item"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-reset"><i class="bi bi-trash"></i> Reset </button></li>
+        {% endif %}  
+    </ul>
+
+
+    <div class="clearfix"></div>
+    <table id="table-content" class="table table-sm table-striped text-center">
+        <thead class="bg-dark text-white">
+            <tr>
+                {#
+                    <th>Unidad Representada</th>
+                    <th>División Representada</th>
+                #}
+                <th>Candidato</th>
+                <th>Unidad</th>
+                <th>División</th>
+                <th>Departamento</th>
+                <th>Sexo</th>  
+                <th>Titular / Suplente</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set countMT = 0 %}
+        {% set countFT = 0 %}
+        {% set countMS = 0 %}
+        {% set countFS = 0 %}
+        {% for seleccion_cdr in seleccion_cdrs %}
+            {% if seleccion_cdr.genero == 'M' %}
+                {% if seleccion_cdr.titularSuplente == 'T' %}
+                    {% set countMT = countMT + 1 %} 
+                {% else %}
+                    {% set countMS = countMS + 1 %}
+                {% endif %}
+            {% else %}
+                {% if seleccion_cdr.titularSuplente == 'T' %}
+                    {% set countFT = countFT + 1 %}
+                {% else %}
+                    {% set countFS = countFS + 1 %}
+                {% endif %}
+            {% endif %}
+            <tr class="small">
+            {#
+                <td>{{ unidad.getNombre(seleccion_cdr.claveUnidadRepresentada) }}</td>
+                <td>{{ division.getNombre(seleccion_cdr.claveDivisionRepresentada) }}</td>
+            #}
+                <td>{{ seleccion_cdr.nombre | upper }}</td>
+                <td>{{ seleccion_cdr.nombreUnidad }}</td>
+                <td>{{ seleccion_cdr.nombreDivision }}</td>
+                <td>{{ seleccion_cdr.nombreDepartamento }}</td>
+                <td>{{ seleccion_cdr.genero }}</td>
+                <td>{{ seleccion_cdr.titularSuplente }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="27">no records found</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <th colspan='8' class="text-end"> Total: Titulares M: {{ countMT }}  F: {{ countFT }}, Suplentes  M: {{ countMS }}  F: {{ countFS }}</th>
+            </tr>
+        </tbody>
+    </table>
+
+   <!-- Modal -->
+    <div class="modal fade" id="modal-insaculacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="text-center">Una nueva selección remplazara la anterior</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="{{ path('candidato_cdr_sorteo') }}" class="btn btn-primary">Aceptar</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-reset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Borrar la selección actual</h5>
+                </div>
+                <div id="reset-modal-body" class="modal-body">
+                    <h3 class="text-center alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ¡La selección actual se perderá!</h3>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelar-reset" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="reset" href="{{ path('seleccion_cdr_reset') }}" class="btn btn-primary"> Aceptar </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

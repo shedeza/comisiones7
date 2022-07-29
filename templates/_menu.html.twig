@@ -6,6 +6,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('candidato_cda_index')}}">Comisiones Dictaminadoras de Área</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Comisión Dictaminadora de Recursos
+                    </a>                    
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('candidato_cdr_index') }}">Candidatos</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('seleccion_cdr_index') }}">Selección</a>
+                        </li>
+                    </ul>
+                </li>
+
                 {# <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Comisiones de Área

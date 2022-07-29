@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CandidatoCdr{% endblock %}
+
+{% block body %}
+    <h1>CandidatoCdr</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Trimestre</th>
+                <td>{{ candidato_cdr.trimestre }}</td>
+            </tr>
+            <tr>
+                <th>Empleado</th>
+                <td>{{ candidato_cdr.empleado }}</td>
+            </tr>
+            <tr>
+                <th>ClaveUnidad</th>
+                <td>{{ candidato_cdr.claveUnidad }}</td>
+            </tr>
+            <tr>
+                <th>ClaveDivision</th>
+                <td>{{ candidato_cdr.claveDivision }}</td>
+            </tr>
+            <tr>
+                <th>Aleatorio</th>
+                <td>{{ candidato_cdr.aleatorio }}</td>
+            </tr>
+            <tr>
+                <th>Genero</th>
+                <td>{{ candidato_cdr.genero }}</td>
+            </tr>
+            <tr>
+                <th>UnidadRepresentada</th>
+                <td>{{ candidato_cdr.unidadRepresentada }}</td>
+            </tr>
+            <tr>
+                <th>ClaveDivisionRepresentada</th>
+                <td>{{ candidato_cdr.claveDivisionRepresentada }}</td>
+            </tr>
+            <tr>
+                <th>NombreUnidadRepresentada</th>
+                <td>{{ candidato_cdr.nombreUnidadRepresentada }}</td>
+            </tr>
+            <tr>
+                <th>NombreDivisionRepresentada</th>
+                <td>{{ candidato_cdr.nombreDivisionRepresentada }}</td>
+            </tr>
+            <tr>
+                <th>NomAux</th>
+                <td>{{ candidato_cdr.nomAux }}</td>
+            </tr>
+            <tr>
+                <th>ClaveDisiplina</th>
+                <td>{{ candidato_cdr.claveDisiplina }}</td>
+            </tr>
+            <tr>
+                <th>Seleccion</th>
+                <td>{{ candidato_cdr.seleccion }}</td>
+            </tr>
+            <tr>
+                <th>TitSup</th>
+                <td>{{ candidato_cdr.titularSuplente }}</td>
+            </tr>
+            <tr>
+                <th>Excluir</th>
+                <td>{{ candidato_cdr.excluir }}</td>
+            </tr>
+            <tr>
+                <th>NombreUnidad</th>
+                <td>{{ candidato_cdr.nombreUnidad }}</td>
+            </tr>
+            <tr>
+                <th>NombreDivision</th>
+                <td>{{ candidato_cdr.nombreDivision }}</td>
+            </tr>
+            <tr>
+                <th>NombreDepartamento</th>
+                <td>{{ candidato_cdr.nombreDepartamento }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ candidato_cdr.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ candidato_cdr.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Antiguedad</th>
+                <td>{{ candidato_cdr.antiguedad }}</td>
+            </tr>
+            <tr>
+                <th>Titular</th>
+                <td>{{ candidato_cdr.titular }}</td>
+            </tr>
+            <tr>
+                <th>TecnicoAcademico</th>
+                <td>{{ candidato_cdr.tecnicoAcademico }}</td>
+            </tr>
+            <tr>
+                <th>Bap</th>
+                <td>{{ candidato_cdr.bap }}</td>
+            </tr>
+            <tr>
+                <th>LineaConosimiento</th>
+                <td>{{ candidato_cdr.lineaConosimiento }}</td>
+            </tr>
+            <tr>
+                <th>CdaEval</th>
+                <td>{{ candidato_cdr.cdaEval }}</td>
+            </tr>
+            <tr>
+                <th>CdaMiembro</th>
+                <td>{{ candidato_cdr.cdaMiembro }}</td>
+            </tr>
+            <tr>
+                <th>Periodos</th>
+                <td>{{ candidato_cdr.periodos }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('candidato_cdr_index') }}">back to list</a>
+
+{% endblock %}

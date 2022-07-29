@@ -1,10 +1,10 @@
-{% extends 'layout.html.twig' %}
+{% extends 'candidato_cda/index.html.twig' %}
 
 {% block title %}Selección Comisión Dictaminadora de Área{% endblock %}
 
 {% block contentRight %}
 
-    <h1 class="text-center">Selección Comisión Dictaminadora de Área <br /> {{ area.nombre }}</h1>
+    <h1 class="text-center">Selección Comisión Dictaminadora en el Área de <br /> {{ area.nombre }}</h1>
 
     <ul class="list-unstyled list-inline float-end">
         {% if seleccionadosCda | length <= 0 %}
@@ -32,7 +32,7 @@
                     <th>Unidad</th>
                     <th>División</th>
                     <th>Disciplina</th>
-                    <th>Género</th>
+                    <th>Sexo</th>
                     <th>Titular / Suplente</th>
                 </tr>
             </thead>

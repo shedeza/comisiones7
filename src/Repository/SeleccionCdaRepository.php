@@ -20,7 +20,10 @@ class SeleccionCdaRepository extends ServiceEntityRepository
     private $trimestre;
     private $mapper;
 
-    public function __construct(ManagerRegistry $registry, AutoMapperInterface $mapper)
+    public function __construct(
+        ManagerRegistry $registry, 
+        AutoMapperInterface $mapper
+    )
     {
         parent::__construct($registry, SeleccionCda::class);
         $this->mapper = $mapper;
