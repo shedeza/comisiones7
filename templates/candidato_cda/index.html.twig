@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}CandidatoCda index{% endblock %}
+
+{% block content %}
+    <br />
+    <h1 class="text-center">Candidatos Comisión Dictaminadora de Área</h1>
+    <br />
+    <div class="accordion" id="accordion">
+        {% for area, candidato_cdas in candidatos %}
+        
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-{{ loop.index0 }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index0 }}" aria-expanded="true" aria-controls="collapse-{{ loop.index0 }}">
+                        <h3>{{ area }}</h3>
+                    </button>
+                    </h2>
+                    <div id="collapse-{{ loop.index0 }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ loop.index0 }}" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <table class="table table-sm table-hover table-striped text-center"> 
+                                <thead class="bg-dark text-white">
+                                    <tr>
+                                        <th>Candidato</th>
+                                        <th>Unidad</th>
+                                        <th>División</th>
+                                        <th>Disciplina</th>
+                                        <th>Género</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for candidato_cda in candidato_cdas %}
+                                    <tr class="small">
+                                        <td>{{ candidato_cda.nombre  }}</td>
+                                        <td>{{ candidato_cda.nombreUnidad }}</td>
+                                        <td>{{ candidato_cda.nombreDivision  }}</td>
+                                        <td>{{ candidato_cda.nombreDisciplina }}</td>
+                                        <td>{{ candidato_cda.genero }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="30">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+        {% endfor %}
+    </div>
+
+{% endblock %}

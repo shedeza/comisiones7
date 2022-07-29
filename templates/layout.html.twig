@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div id="main" class="main container">
+        <header class="bg-light">
+            {% block header %}
+                    <div id="barner" class="p-4 mx-auto text-center">
+                        <img src="{{ asset('resources/img/variacion4.png') }}" class="img-fluid mx-auto text-center" width="70%" alt="">
+                    </div>
+                    {% block menu %}
+                        {% include '_menu.html.twig' %}
+                    {% endblock %}
+            {% endblock %}
+        </header>
+
+        <div id="content" class="bg-white p-3">
+            {% block content %}
+                <div class="row">
+                    <div class="col-3">
+                        {% block menuLeft %}
+                           {{ render(controller('App\\Controller\\AppController::leftMenu', {'pathInfo': app.request.pathinfo })) }}
+                        {% endblock %}
+                    </div>
+                    <div class="col">
+                        {% block contentRight %}{% endblock %}
+                    </div> 
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+    <footer>
+        {% block footer %}
+            <br />
+            <br />
+        {% endblock %}
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

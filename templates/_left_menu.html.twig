@@ -1,0 +1,22 @@
+<h4 class="text-center mt-5">Áreas</h4>
+<hr />
+
+<div class="accordion" id="accordion_left_menu">
+    {% for id, area in area.getAll %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-{{ area }}">
+                <button class="accordion-button {{ id == areaId ? '': 'collapsed'}} active" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ id }}" aria-expanded="{{ id == areaId ? 'true': 'false'}}" aria-controls="collapse-{{ id }}">
+                    {{ area }}
+                </button>
+            </h2>
+            <div id="collapse-{{ id }}" class="accordion-collapse {{ id == areaId ? 'show': ''}} collapse bg-secondary" aria-labelledby="heading-{{ area }}" data-bs-parent="#accordion_left_menu">
+                <div class="accordion-body">
+                    <ul class="nav flex-column text">
+                        <li  class="nav-item"><a class="nav-link link-light" href="{{ path('candidato_cda_index_area', {'area': id}) }}">Candidatos</a></li>
+                        <li  class="nav-item"><a class="nav-link link-light" href="{{ path('seleccion_cda_index_area', {'area': id}) }}">Selección</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

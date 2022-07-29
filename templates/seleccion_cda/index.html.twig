@@ -1,0 +1,144 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Selección Comisión Dictaminadora de Área{% endblock %}
+
+{# {% block menuLeft %}
+   {{ include('seleccion_cda/_menu_left.html.twig') }}
+{% endblock %} #}
+
+{% block content %}
+    <ul class="list-unstyled list-inline float-end">
+        {% if count <= 0 %}
+            <li class="list-inline-item"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insaculacion"> Seleccionar Candidatos </button></li>
+        {% else %} 
+            <li class="list-inline-item"><a href="{{ path('seleccion_cda_download') }}" class="btn btn-success">Descargar Seleción</a></li>
+            <!-- Button trigger modal -->
+            {# <li class="list-inline-item"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-reset"> Reset </button></li> #}
+        {% endif %}  
+    </ul>
+    <div class="clearfix"></div>
+
+    <h1 class="text-center">Selección Comisión Dictaminadora de Área</h1>
+    
+    {% for area, seleccionCdas in seleccionadosCda %}
+        
+        {% set countMT = 0 %}
+        {% set countFT = 0 %}
+        {% set countMS = 0 %}
+        {% set countFS = 0 %}
+
+        <div id="div-{{ loop.index0 }}" {# style="display:none;" #}>
+            <br />
+            <h1 class="text-center">{{ area }}</h1>
+            <table id="table-content" class="table table-sm table-striped text-center">
+                <thead>
+                    <tr class="table-dark">
+                        <th>Candidato</th>
+                        <th>Unidad</th>
+                        <th>División</th>
+                        <th>Disciplina</th>
+                        <th>Género</th>
+                        <th>Titular / Suplente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for seleccionCda in seleccionCdas %}
+                        <tr class="">
+                            <td>{{ seleccionCda.nombre | upper }}</td>
+                            <td>{{ seleccionCda.nombreUnidad }}</td>
+                            <td>{{ seleccionCda.nombreDivision }}</td>
+                            <td>{{ seleccionCda.nombreDisciplina }}</td>
+                            <td>{{ seleccionCda.genero }}</td>              
+                            <td>{{ seleccionCda.titularSuplente }}</td>
+                        </tr>
+                        {% if seleccionCda.titularSuplente == 'T' %}
+                            {% if seleccionCda.genero == 'M' %}
+                                {% set countMT = countMT + 1 %}
+                            {% else %}
+                                {% set countFT = countFT + 1 %}
+                            {% endif %}
+                        {% else %}
+                            {% if seleccionCda.genero == 'M' %}
+                                {% set countMS = countMS + 1 %}
+                            {% else %}
+                                {% set countFS = countFS + 1 %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td colspan="28">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th colspan='8' class="text-end"> Total: Titulares M: {{ countMT }}  F: {{ countFT }}, Suplentes  M: {{ countMS }}  F: {{ countFS }}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <br />
+    {% endfor %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-reset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Borrar la selección actual</h5>
+                </div>
+                <div id="reset-modal-body" class="modal-body">
+                    <h3 class="text-center alert alert-warning">¡La selección actual se perderá!</h3>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelar-reset" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="reset" href="{{ path('seleccion_cda_reset') }}" class="btn btn-primary"> Aceptar </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-insaculacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Insaculación</h5>
+                </div>
+                <div id="insacular-modal-body" class="modal-body">
+                    <h3 class="text-center">¡Realizar la insaculación de los candidatos!</h3>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelar-insacular" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="insacular" href="{{ path('candidato_cda_sorteo') }}" class="btn btn-primary" > Aceptar </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function(){
+
+            $("#insacular").click(function (e) {
+                //e.preventDefault();
+                $("#cancelar-insacular").prop('disabled', true);
+                $("#insacular-modal-body").html('<img src="{{ asset("resources/img/loading.gif") }}" class="text-center" width="100%" alt="">');
+            });
+
+            $("#reset").click(function (e) {
+                //e.preventDefault();
+                $("#cancelar-reset").prop('disabled', true);
+                $("#reset-modal-body").html('<img src="{{ asset("resources/img/loading.gif") }}" class="text-center" width="100%" alt="">');
+                console.log("SI");
+            });
+
+            {# {% for seleccionCdas in seleccionadosCda %}
+                $("#div-{{ loop.index0 }}").delay(1000 * {{ loop.index0 }} ).slideDown();
+            {% endfor %}  #}
+        });
+    </script>
+
+{% endblock %}

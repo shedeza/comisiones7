@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}CandidatoCda index{% endblock %}
+
+{% block contentRight %}
+    <h1 class="text-center">Candidatos Comisión Dictaminadora <br /> {{ area }}</h1>
+    <br />
+    <table class="table table-sm table-hover table-striped text-center"> 
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Candidato</th>
+                <th>Unidad</th>
+                <th>División</th>
+                <th>Disciplina</th>
+                <th>Género</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidato_cda in candidatosCda %}
+            <tr class="small">
+                <td>{{ candidato_cda.nombre  }}</td>
+                <td>{{ candidato_cda.nombreUnidad }}</td>
+                <td>{{ candidato_cda.nombreDivision  }}</td>
+                <td>{{ candidato_cda.nombreDisciplina }}</td>
+                <td>{{ candidato_cda.genero }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="30">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
