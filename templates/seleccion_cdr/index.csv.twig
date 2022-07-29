@@ -1,4 +1,4 @@
-Unidad Representada, División Representada, CANDIDATO, Unidad, División, Departamento, Género, Titular / Suplente
+Candidato, Unidad, División, Departamento, Género, Titular / Suplente
 {% for seleccion_cdr in seleccion_cdrs %}
-{{ unidad[seleccion_cdr.claveUnidadRepresentada] }}, {{ division[seleccion_cdr.claveDivisionRepresentada] }}, {{ seleccion_cdr.nombre | upper }}, {{ seleccion_cdr.nombreUnidad }}, {{ seleccion_cdr.nombreDivision }}, {{ seleccion_cdr.nombreDepartamento }}, {{ seleccion_cdr.genero }}, {{ seleccion_cdr.titularSupplente }}
+{{ seleccion_cdr.nombre | upper }}, {{ seleccion_cdr.nombreUnidad }}, {{ seleccion_cdr.nombreDivision }}, {{ seleccion_cdr.nombreDepartamento }}, {{ seleccion_cdr.genero }}, {{ seleccion_cdr.titularSuplente }}
 {% endfor %}

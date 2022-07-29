@@ -7,8 +7,10 @@ use App\Repository\SeleccionCdrRepository;
 use App\Utils\Division;
 use App\Utils\Unidad;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -58,17 +60,15 @@ class SeleccionCdrController extends AbstractController
         $response = new Response();
         $filename = 'seleccion_cdr.csv';
 
-        // Set headers
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', 'text/plain' );
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '";');
-        $response->headers->set('Content-length',  strlen($result));
-        $response->setCharset('UTF-8');
+        $response = new Response(iconv("UTF8", "WINDOWS-1252//IGNORE", $result));
+        $response->headers->set('Content-Type', 'text/csv');
 
-        // Send headers before outputting anything
-        $response->sendHeaders();
+        $disposition = HeaderUtils::makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT, 
+            $filename
+        );
 
-        $response->setContent($result);
+        $response->headers->set('Content-Disposition', $disposition);
 
         return $response;
     }
