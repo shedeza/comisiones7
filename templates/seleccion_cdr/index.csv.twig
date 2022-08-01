@@ -1,4 +1,4 @@
-Candidato, Unidad, División, Departamento, Género, Titular / Suplente
+Candidato, Unidad, División, Departamento, Sexo, Titular / Suplente
 {% for seleccion_cdr in seleccion_cdrs %}
 {{ seleccion_cdr.nombre | upper }}, {{ seleccion_cdr.nombreUnidad }}, {{ seleccion_cdr.nombreDivision }}, {{ seleccion_cdr.nombreDepartamento }}, {{ seleccion_cdr.genero }}, {{ seleccion_cdr.titularSuplente }}
 {% endfor %}
