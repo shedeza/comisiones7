@@ -116,7 +116,7 @@ class SeleccionCdr
     /**
      * @ORM\Column(name="linea_cono_xx", type="string", length=255, nullable=true)
      */
-    private $lineaConosimiento;
+    private $nombreDisciplina;
 
     /**
      * @ORM\Column(name="cda_eval_xx", type="string", length=100, nullable=true)
@@ -373,14 +373,14 @@ class SeleccionCdr
         return $this;
     }
 
-    public function getLineaConosimiento(): ?string
+    public function getNombreDisiplina(): ?string
     {
-        return $this->lineaConosimiento;
+        return $this->nombreDisciplina;
     }
 
-    public function setLineaConosimiento(string $lineaConosimiento): self
+    public function setNombreDisiplina(string $nombreDisciplina): self
     {
-        $this->lineaConosimiento = $lineaConosimiento;
+        $this->nombreDisciplina = $nombreDisciplina;
 
         return $this;
     }

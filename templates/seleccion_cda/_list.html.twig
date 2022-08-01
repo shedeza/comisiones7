@@ -1,0 +1,56 @@
+ 
+    {% set countMT = 0 %}
+    {% set countFT = 0 %}
+    {% set countMS = 0 %}
+    {% set countFS = 0 %}
+
+    {% if seleccionadosCda | length > 0 %}
+        <table id="table-content" class="table table-sm table-striped text-center">
+            <thead>
+                <tr class="table-dark">
+                    <th>Candidato</th>
+                    <th>Unidad</th>
+                    <th>División</th>
+                    {% if area.id < 8 %}
+                        <th>Disciplina</th>
+                    {% endif %}
+                    <th>Sexo</th>
+                    <th>Titular / Suplente</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for seleccionCda in seleccionadosCda %}
+                    <tr class="small">
+                        <td>{{ seleccionCda.nombre | upper }}</td>
+                        <td>{{ seleccionCda.nombreUnidad }}</td>
+                        <td>{{ seleccionCda.nombreDivision }}</td>
+                        {% if area.id < 8 %}
+                            <td>{{ seleccionCda.nombreDisciplina }}</td>
+                        {% endif %}
+                        <td>{{ seleccionCda.genero }}</td>              
+                        <td>{{ seleccionCda.titularSuplente }}</td>
+                    </tr>
+                    {% if seleccionCda.titularSuplente == 'T' %}
+                        {% if seleccionCda.genero == 'M' %}
+                            {% set countMT = countMT + 1 %}
+                        {% else %}
+                            {% set countFT = countFT + 1 %}
+                        {% endif %}
+                    {% else %}
+                        {% if seleccionCda.genero == 'M' %}
+                            {% set countMS = countMS + 1 %}
+                        {% else %}
+                            {% set countFS = countFS + 1 %}
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="28">no records found</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan='8' class="text-end"> Total: Titulares M: {{ countMT }}  F: {{ countFT }}, Suplentes  M: {{ countMS }}  F: {{ countFS }}</th>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}

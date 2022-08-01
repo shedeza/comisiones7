@@ -84,6 +84,25 @@ class SeleccionCdaRepository extends ServiceEntityRepository
         return $consulta->getArrayResult();
     }
 
+    public function getByAreaTipo(int $area, string $titSup){
+        $dql = "
+            SELECT s.empleado, s.claveComisionDictaminadora, s.nomAux, s.nombreUnidad, s.nombreDivision, s.nombreDisciplina, s.nombreDepartamento, s.genero, s.titularSuplente, c.nombre
+                FROM App:SeleccionCda s
+                    LEFT JOIN App:CandidatoCda c WITH c.empleado = s.empleado
+                    WHERE c.trimestre = :trimestre 
+                        AND c.claveComisionDictaminadora = :area
+                        AND s.titularSuplente = :titSup
+                ORDER BY s.titularSuplente DESC, s.claveUnidad ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
+        ";
+
+        $consulta = $this->getEntityManager()->createQuery($dql);
+        $consulta->setParameter('trimestre', $this->trimestre);
+        $consulta->setParameter('area', $area);
+        $consulta->setParameter('titSup', $titSup);
+
+        return $consulta->getArrayResult();
+    }
+
 
     public function guardaSeleccion(CandidatoCda $candidatoCda) : SeleccionCda
     {

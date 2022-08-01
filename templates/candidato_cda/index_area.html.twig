@@ -3,7 +3,7 @@
 {% block title %}CandidatoCda index{% endblock %}
 
 {% block contentRight %}
-    <h1 class="text-center">Candidatos Comisión Dictaminadora en el Área de <br /> {{ area }}</h1>
+    <h1 class="text-center">Candidatos Comisión Dictaminadora en el Área de <br /> {{ area.nombre }}</h1>
     <br />
     <table class="table table-sm table-hover table-striped text-center"> 
         <thead class="bg-dark text-white">
@@ -11,7 +11,9 @@
                 <th>Candidato</th>
                 <th>Unidad</th>
                 <th>División</th>
-                <th>Disciplina</th>
+                {% if area.id < 8 %}
+                    <th>Disciplina</th>
+                {% endif %}
                 <th>Sexo</th>
             </tr>
         </thead>
@@ -21,7 +23,9 @@
                 <td>{{ candidato_cda.nombre }}</td>
                 <td>{{ candidato_cda.nombreUnidad }}</td>
                 <td>{{ candidato_cda.nombreDivision  }}</td>
-                <td>{{ candidato_cda.nombreDisciplina }}</td>
+                {% if area.id < 8 %}
+                    <td>{{ candidato_cda.nombreDisciplina }}</td>
+                {% endif %}
                 <td>{{ candidato_cda.genero }}</td>
             </tr>
         {% else %}

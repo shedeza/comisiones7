@@ -15,64 +15,9 @@
         {% endif %}  
     </ul>
 
-
     <div class="clearfix"></div>
-    <table id="table-content" class="table table-sm table-striped text-center">
-        <thead class="bg-dark text-white">
-            <tr>
-                {#
-                    <th>Unidad Representada</th>
-                    <th>División Representada</th>
-                #}
-                <th>Candidato</th>
-                <th>Unidad</th>
-                <th>División</th>
-                <th>Departamento</th>
-                <th>Sexo</th>  
-                <th>Titular / Suplente</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% set countMT = 0 %}
-        {% set countFT = 0 %}
-        {% set countMS = 0 %}
-        {% set countFS = 0 %}
-        {% for seleccion_cdr in seleccion_cdrs %}
-            {% if seleccion_cdr.genero == 'M' %}
-                {% if seleccion_cdr.titularSuplente == 'T' %}
-                    {% set countMT = countMT + 1 %} 
-                {% else %}
-                    {% set countMS = countMS + 1 %}
-                {% endif %}
-            {% else %}
-                {% if seleccion_cdr.titularSuplente == 'T' %}
-                    {% set countFT = countFT + 1 %}
-                {% else %}
-                    {% set countFS = countFS + 1 %}
-                {% endif %}
-            {% endif %}
-            <tr class="small">
-            {#
-                <td>{{ unidad.getNombre(seleccion_cdr.claveUnidadRepresentada) }}</td>
-                <td>{{ division.getNombre(seleccion_cdr.claveDivisionRepresentada) }}</td>
-            #}
-                <td>{{ seleccion_cdr.nombre | upper }}</td>
-                <td>{{ seleccion_cdr.nombreUnidad }}</td>
-                <td>{{ seleccion_cdr.nombreDivision }}</td>
-                <td>{{ seleccion_cdr.nombreDepartamento }}</td>
-                <td>{{ seleccion_cdr.genero }}</td>
-                <td>{{ seleccion_cdr.titularSuplente }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="27">no records found</td>
-            </tr>
-        {% endfor %}
-            <tr>
-                <th colspan='8' class="text-end"> Total: Titulares M: {{ countMT }}  F: {{ countFT }}, Suplentes  M: {{ countMS }}  F: {{ countFS }}</th>
-            </tr>
-        </tbody>
-    </table>
+
+    {% include 'seleccion_cdr/_list.html.twig' %}
 
    <!-- Modal -->
     <div class="modal fade" id="modal-insaculacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

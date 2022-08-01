@@ -31,10 +31,11 @@ class CienciasEconomicoAdministrativas {
         /**
          * 1S A-I-X Administración-Economía
          */
-
+        $disciplinas = [Disciplina::ADMINISTRACION, Disciplina::ECONOMIA];
         /** @var CandidatoCda $candidatoCda */
         $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
+            //'claveUnidad' => Unidad::IZT,
+            'nombreDisciplina' => $disciplinas[rand(0,1)]
         ]));
        
         $candidatoCda->setTitularSuplente('S');

@@ -39,7 +39,10 @@ class CandidatoCdaController extends AbstractController
     {
         return $this->render('candidato_cda/index_area.html.twig', [
             'candidatosCda' => $candidatoCdaRepository->getByArea($area),
-            'area' => $areas->getNombre($area),
+            'area' => [
+                'id' => $area,
+                'nombre' => $areas->getNombre($area)
+            ],
         ]);
     }
     

@@ -30,12 +30,12 @@ class SeleccionCdrRepository extends ServiceEntityRepository
         $this->trimestre = "22I";
     }
 
-    public function gelAll(){
+    public function getAll(){
         $dql = "
-            SELECT s.nomAux, s.claveUnidadRepresentada, s.claveDivisionRepresentada, s.nombreUnidad, s.nombreDivision, s.nombreDepartamento, s.genero, s.titularSuplente, c.nombre
+            SELECT s.nomAux, s.claveUnidadRepresentada, s.claveDivisionRepresentada, s.nombreUnidad, s.nombreDivision, s.nombreDepartamento, s.genero, s.titularSuplente, c.nombre, s.nombreDisciplina
                 FROM App:SeleccionCdr s
                     LEFT JOIN App:CandidatoCdr c WITH c.empleado = s.empleado
-                ORDER BY s.titularSuplente DESC, s.claveUnidadRepresentada ASC, s.claveDivisionRepresentada ASC
+                ORDER BY s.titularSuplente DESC, s.claveUnidad ASC, s.claveDivision ASC
         ";
 
         $consulta = $this->getEntityManager()->createQuery($dql);
@@ -86,5 +86,20 @@ class SeleccionCdrRepository extends ServiceEntityRepository
         $consulta->setParameter('trimestre', $this->trimestre);
 
         $consulta->execute();
+    }
+
+    public function getByTipo(string $titSup){
+        $dql = "
+            SELECT s.nomAux, s.claveUnidadRepresentada, s.claveDivisionRepresentada, s.nombreUnidad, s.nombreDivision, s.nombreDepartamento, s.genero, s.titularSuplente, c.nombre, s.nombreDisciplina
+                FROM App:SeleccionCdr s
+                    LEFT JOIN App:CandidatoCdr c WITH c.empleado = s.empleado
+                WHERE s.titularSuplente = :titularSuplente
+                ORDER BY s.titularSuplente DESC, s.claveUnidad ASC, s.claveDivision ASC
+        ";
+
+        $consulta = $this->getEntityManager()->createQuery($dql);
+        $consulta->setParameter('titularSuplente', $titSup);
+
+        return $consulta->getArrayResult();
     }
 }

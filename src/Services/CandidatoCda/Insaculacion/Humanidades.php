@@ -43,33 +43,9 @@ class Humanidades {
         $this->candidatoCdaRepository->seleccionado($candidatoCda);
         $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
 
-        /**
-         * 2S A-I Cualquier disciplina (que no se repitan)
-         */
-        
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::AZC,
-        ]));
-       
-        $candidatoCda->setTitularSuplente('S');
-        $disciplina = $candidatoCda->getDisciplina();
-
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
-
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
-        ]), [], [$disciplina]);
-       
-        $candidatoCda->setTitularSuplente('S');
-
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
 
         /**
-         * 2S X-I Comunicación-Psicología
+         * 1S X Comunicación-Psicología
          */
 
         $disciplinas = [Disciplina::CIENCIAS_DE_LA_COMUNICACION, Disciplina::PSICOLOGIA];
@@ -78,9 +54,23 @@ class Humanidades {
             'claveUnidad' => Unidad::XOC,
             'nombreDisciplina' => $disciplinas[rand(0,1)],
         ]));
+
+        $candidatoCda->setTitularSuplente('S');
+
+        $this->candidatoCdaRepository->seleccionado($candidatoCda);
+        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+
+        /**
+         * 2S A-I Cualquier disciplina (que no se repitan)
+         */
+        $disciplinas = [];
+        /** @var CandidatoCda $candidatoCda */
+        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
+            'claveUnidad' => Unidad::AZC,
+        ]));
        
         $candidatoCda->setTitularSuplente('S');
-        $disciplina = $candidatoCda->getDisciplina();
+        $disciplinas[] = $candidatoCda->getDisciplina();
 
         $this->candidatoCdaRepository->seleccionado($candidatoCda);
         $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
@@ -88,7 +78,20 @@ class Humanidades {
         /** @var CandidatoCda $candidatoCda */
         $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
             'claveUnidad' => Unidad::IZT,
-        ]));
+        ]), [], $disciplinas);
+       
+        $candidatoCda->setTitularSuplente('S');
+        $disciplinas[] = $candidatoCda->getDisciplina();
+
+        $this->candidatoCdaRepository->seleccionado($candidatoCda);
+        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+
+
+        $unidades = [Unidad::AZC, Unidad::IZT];
+        /** @var CandidatoCda $candidatoCda */
+        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
+            'claveUnidad' => $unidades[rand(0,1)]
+        ]), [], $disciplinas);
        
         $candidatoCda->setTitularSuplente('S');
         $disciplina = $candidatoCda->getDisciplina();

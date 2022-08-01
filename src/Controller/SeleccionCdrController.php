@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SeleccionCdr;
+use App\Repository\SeleccionCdrActualRepository;
 use App\Repository\SeleccionCdrRepository;
 use App\Utils\Division;
 use App\Utils\Unidad;
@@ -28,7 +29,7 @@ class SeleccionCdrController extends AbstractController
     ): Response
     {
         return $this->render('seleccion_cdr/index.html.twig', [
-            'seleccion_cdrs' => $seleccionCdrRepository->gelAll(),
+            'seleccion_cdrs' => $seleccionCdrRepository->getAll(),
             'unidad' => $unidad,
             'division' => $division
         ]);
@@ -100,6 +101,42 @@ class SeleccionCdrController extends AbstractController
 
         return $this->render('seleccion_cdr/show.html.twig', [
             'seleccion_cdr' => $seleccionCdr,
+        ]);
+    }
+
+    /**
+     * @Route("/final", name="seleccion_cdr_final", methods={"GET"})
+     */
+    public function final(
+        Unidad $unidad,
+        Division $division,
+        SeleccionCdrRepository $seleccionCdrRepository,
+        SeleccionCdrActualRepository $seleccionCdrActualRepository
+    ): Response
+    {
+
+        $actualT =  $seleccionCdrActualRepository->getByTipo('T');
+        $seleccionT = $seleccionCdrRepository->getByTipo('T');
+        $seleccionTit = array_merge($actualT, $seleccionT);
+
+        usort($seleccionTit, function($a, $b) {
+            return $a['nombreUnidad'] > $b['nombreUnidad'];
+        });
+
+        $actualS =  $seleccionCdrActualRepository->getByTipo('S');
+        $seleccionS = $seleccionCdrRepository->getByTipo('S');
+        $seleccionSup = array_merge($actualS, $seleccionS);
+
+        usort($seleccionSup, function($a, $b) {
+            return $a['nombreUnidad'] > $b['nombreUnidad'];
+        });
+
+        $seleccion = array_merge($seleccionTit, $seleccionSup);
+
+        return $this->render('seleccion_cdr/final.html.twig', [
+            'seleccion_cdrs' => $seleccion,
+            'unidad' => $unidad,
+            'division' => $division
         ]);
     }
 }

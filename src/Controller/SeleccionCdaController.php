@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SeleccionCdaActualRepository;
 use App\Repository\SeleccionCdaRepository;
 use App\Utils\Area;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -135,5 +136,41 @@ class SeleccionCdaController extends AbstractController
         $response->headers->set('Content-Disposition', $disposition);
 
         return $response;
+    }
+
+    /**
+     * @Route("/final/{area}", name="seleccion_cda_final_area", methods={"GET"})
+     */
+    public function finalArea(
+        Area $areas, 
+        SeleccionCdaRepository $seleccionCdaRepository, 
+        SeleccionCdaActualRepository $seleccionCdaActualRepository, 
+        int $area): Response
+    {
+
+        $seleccionadosTitulares = $seleccionCdaRepository->getByAreaTipo($area, 'T');
+        $titularesActual =  $seleccionCdaActualRepository->getByArea($area, 'T');
+
+        $seleccionadosTitulares = array_merge($titularesActual,$seleccionadosTitulares);
+
+        usort($seleccionadosTitulares, function($a, $b) {
+            return $a['nombreUnidad'] > $b['nombreUnidad'];
+        });
+
+        $seleccionadosSuplentes = $seleccionCdaRepository->getByAreaTipo($area, 'S');
+        $suplentesActual =  $seleccionCdaActualRepository->getByArea($area, 'S');
+
+        $seleccionadosSuplentes = array_merge($suplentesActual,$seleccionadosSuplentes);
+
+        usort($seleccionadosSuplentes, function($a, $b) {
+            return $a['nombreUnidad'] > $b['nombreUnidad'];
+        });
+
+        $seleccionados = array_merge($seleccionadosTitulares, $seleccionadosSuplentes);
+
+        return $this->render('seleccion_cda/final.html.twig', [
+            'seleccionadosCda' => $seleccionados,
+            'area' => ['id' => $area, 'nombre' => $areas->getNombre($area)],
+        ]);
     }
 }

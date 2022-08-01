@@ -11,7 +11,7 @@
                 <th>Candidato</th>
                 <th>Unidad</th>
                 <th>División</th>
-                <th>Departamento</th>
+                <th>Disciplina</th>
                 <th>Sexo</th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@
                 <td >{{ candidato_cdr.nombre | upper }}</td>
                 <td class="nowrap">{{ candidato_cdr.nombreUnidad }}</td>
                 <td>{{ candidato_cdr.nombreDivision }}</td>
-                <td>{{ candidato_cdr.nombreDepartamento }}</td>
+                <td>{{ candidato_cdr.lineaConosimiento }}</td>
                 <td>{{ candidato_cdr.genero }}</td>
             </tr>
         {% else %}
