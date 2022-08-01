@@ -73,15 +73,13 @@ class CienciasBiologicas {
          * 2S I Cualquier disciplina
          */
 
-        $disciplinas = [];
-
         /** @var CandidatoCda $candidatoCda */
         $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
             'claveUnidad' => Unidad::IZT,
         ]));
        
         $candidatoCda->setTitularSuplente('S');
-        $disciplinas[] = $candidatoCda->getDisciplina();
+        $disciplina = $candidatoCda->getDisciplina();
 
         $this->candidatoCdaRepository->seleccionado($candidatoCda);
         $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
@@ -89,7 +87,7 @@ class CienciasBiologicas {
         /** @var CandidatoCda $candidatoCda */
         $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
             'claveUnidad' => Unidad::IZT,
-        ]), [], $disciplinas);
+        ]), [], [$disciplina]);
        
         $candidatoCda->setTitularSuplente('S');
 
@@ -106,7 +104,7 @@ class CienciasBiologicas {
         ]));
        
         $candidatoCda->setTitularSuplente('S');
-        $disciplinas[] = $candidatoCda->getDisciplina();
+        $disciplina = $candidatoCda->getDisciplina();
 
         $this->candidatoCdaRepository->seleccionado($candidatoCda);
         $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
@@ -114,7 +112,7 @@ class CienciasBiologicas {
         /** @var CandidatoCda $candidatoCda */
         $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
             'claveUnidad' => Unidad::XOC,
-        ]), [], $disciplinas);
+        ]), [], [$disciplina]);
        
         $candidatoCda->setTitularSuplente('S');
 

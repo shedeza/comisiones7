@@ -55,6 +55,7 @@ class Insaculacion {
         /** @var CandidatoCdr $candidatoCdr */
         $candidatoCdr = $this->candidatoCdrRepository->getCandidato(array_merge([
             'claveUnidad' => Unidad::CUA,
+            'claveDivision' => Division::CSH
         ]));
         $candidatoCdr->setTitularSuplente("T");
 
