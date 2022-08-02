@@ -53,7 +53,7 @@ class SeleccionCdrController extends AbstractController
             '005' => 'CAD'
         ];
         $result = $this->render('seleccion_cdr/index.csv.twig', [
-            'seleccion_cdrs' => $seleccionCdrRepository->gelAll(),
+            'seleccion_cdrs' => $seleccionCdrRepository->getAll(),
             'unidad' => $unidad,
             'division' => $division
         ]);
