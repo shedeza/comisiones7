@@ -5,6 +5,6 @@
 {% block content %}
     <h1 class="text-center">Comisión Dictaminadora de Recursos</h1>
 
-    {% include 'seleccion_cdr/_list.html.twig' %}
+    {% include 'seleccion_cdr/_list.html.twig'  with {'seleccion_cdrs': seleccion_cdrs, 'miembro': 'Miembro'} %}
 
 {% endblock %}

@@ -154,7 +154,13 @@ class SeleccionCdaController extends AbstractController
         $seleccionadosTitulares = array_merge($titularesActual,$seleccionadosTitulares);
 
         usort($seleccionadosTitulares, function($a, $b) {
-            return $a['nombreUnidad'] > $b['nombreUnidad'];
+            if( $a['nombreUnidad'] != $b['nombreUnidad']){
+                return $a['nombreUnidad'] > $b['nombreUnidad'];
+            } else if($a['nombreDivision'] != $b['nombreDivision']) {
+                return $a['nombreDivision'] > $b['nombreDivision'];
+            } else {
+                return $a['nombreDisciplina'] > $b['nombreDisciplina'];
+            }
         });
 
         $seleccionadosSuplentes = $seleccionCdaRepository->getByAreaTipo($area, 'S');
@@ -163,7 +169,13 @@ class SeleccionCdaController extends AbstractController
         $seleccionadosSuplentes = array_merge($suplentesActual,$seleccionadosSuplentes);
 
         usort($seleccionadosSuplentes, function($a, $b) {
-            return $a['nombreUnidad'] > $b['nombreUnidad'];
+            if( $a['nombreUnidad'] != $b['nombreUnidad']){
+                return $a['nombreUnidad'] > $b['nombreUnidad'];
+            } else if($a['nombreDivision'] != $b['nombreDivision']) {
+                return $a['nombreDivision'] > $b['nombreDivision'];
+            } else {
+                return $a['nombreDisciplina'] > $b['nombreDisciplina'];
+            }
         });
 
         $seleccionados = array_merge($seleccionadosTitulares, $seleccionadosSuplentes);

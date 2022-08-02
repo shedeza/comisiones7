@@ -6,7 +6,7 @@
 
     <h1 class="text-center">Comisión Dictaminadora en el Área de <br /> {{ area.nombre }}</h1>
 
-    {% include 'seleccion_cda/_list.html.twig' %}
+    {% include 'seleccion_cda/_list.html.twig' with {'seleccionadosCda': seleccionadosCda, 'miembro': 'Miembro'} %}
 
 {% endblock %}
 

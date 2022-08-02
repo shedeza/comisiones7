@@ -8,7 +8,7 @@
         <table id="table-content" class="table table-sm table-striped text-center">
             <thead>
                 <tr class="table-dark">
-                    <th>Candidato</th>
+                    <th>{{ miembro | default('Candidato') }}</th>
                     <th>Unidad</th>
                     <th>División</th>
                     {% if area.id < 8 %}

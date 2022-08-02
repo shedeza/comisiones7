@@ -120,7 +120,11 @@ class SeleccionCdrController extends AbstractController
         $seleccionTit = array_merge($actualT, $seleccionT);
 
         usort($seleccionTit, function($a, $b) {
-            return $a['nombreUnidad'] > $b['nombreUnidad'];
+            if( $a['nombreUnidad'] != $b['nombreUnidad']){
+                return $a['nombreUnidad'] > $b['nombreUnidad'];
+            } else {
+                return $a['nombreDivision'] > $b['nombreDivision'];
+            }
         });
 
         $actualS =  $seleccionCdrActualRepository->getByTipo('S');
@@ -128,7 +132,11 @@ class SeleccionCdrController extends AbstractController
         $seleccionSup = array_merge($actualS, $seleccionS);
 
         usort($seleccionSup, function($a, $b) {
-            return $a['nombreUnidad'] > $b['nombreUnidad'];
+            if( $a['nombreUnidad'] != $b['nombreUnidad']){
+                return $a['nombreUnidad'] > $b['nombreUnidad'];
+            } else {
+                return $a['nombreDivision'] > $b['nombreDivision'];
+            }
         });
 
         $seleccion = array_merge($seleccionTit, $seleccionSup);
