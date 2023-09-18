@@ -125,7 +125,7 @@ class SeleccionCdaController extends AbstractController
         ]);        
 
         $fileName = iconv("UTF8", "ASCII//IGNORE//TRANSLIT", $areas->getNombre($area).'.csv');
-        $response = new Response(iconv("UTF8", "WINDOWS-1252//IGNORE", $view));
+        $response = new Response(iconv("UTF8", "WINDOWS-1252//IGNORE", $view->getContent()));
         $response->headers->set('Content-Type', 'text/csv');
 
         $disposition = HeaderUtils::makeDisposition(

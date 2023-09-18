@@ -60,7 +60,7 @@ final class Driver extends AbstractSQLServerDriver
     private function _constructPdoDsn(array $params, array $connectionOptions)
     {
         //$dsn = 'sqlsrv:server=';
-        $dsn = 'dblib:host=';
+        $dsn = 'dblib:host='; 
 
         if (isset($params['host'])) {
             $dsn .= $params['host'];

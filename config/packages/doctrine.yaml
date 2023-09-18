@@ -8,7 +8,7 @@ doctrine:
         user: rdtijpaa00
         password: KsjEWertyVT4-62
         dbname: aabdd02
-        charset: roman8
+        charset:  
         types:
             float: App\Doctrine\DBAL\FloatType
             money: App\Doctrine\DBAL\MoneyType

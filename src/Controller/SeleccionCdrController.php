@@ -61,7 +61,7 @@ class SeleccionCdrController extends AbstractController
         $response = new Response();
         $filename = 'seleccion_cdr.csv';
 
-        $response = new Response(iconv("UTF8", "WINDOWS-1252//IGNORE", $result));
+        $response = new Response(iconv("UTF8", "WINDOWS-1252//IGNORE", $result->getContent()));
         $response->headers->set('Content-Type', 'text/csv');
 
         $disposition = HeaderUtils::makeDisposition(
