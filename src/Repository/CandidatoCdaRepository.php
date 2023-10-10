@@ -21,7 +21,7 @@ class  CandidatoCdaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CandidatoCda::class);
 
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function save(CandidatoCda $candidatoCda) : CandidatoCda
@@ -32,13 +32,20 @@ class  CandidatoCdaRepository extends ServiceEntityRepository
         return $candidatoCda;
     }
 
-    public function seleccionado(CandidatoCda $candidatoCda) : CandidatoCda
+    public function seleccionado(CandidatoCda $candidatoCda, ?array $representa = null) : CandidatoCda
     {
         $candidatoCda->setSeleccion('X');
-        $candidatoCda->setClaveUnidadRepresentada($candidatoCda->getClaveUnidad());
-        $candidatoCda->setClaveDivisionRepresentada($candidatoCda->getClaveDivision());
-        $candidatoCda->setNombreUnidadRepresentada($candidatoCda->getNombreUnidad());
-        $candidatoCda->setNombreDivisionRepresentada($candidatoCda->getNombreDivision());
+        if(!empty($representa)) {
+            $candidatoCda->setClaveUnidadRepresentada($representa['unidad']['clave']);
+           // $candidatoCda->setClaveDivisionRepresentada($representa['division']['clave']);
+            $candidatoCda->setNombreUnidadRepresentada($representa['unidad']['nombre']);
+           // $candidatoCda->setNombreDivisionRepresentada($representa['division']['nombre']);
+        } else {
+            $candidatoCda->setClaveUnidadRepresentada($candidatoCda->getClaveUnidad());
+            $candidatoCda->setClaveDivisionRepresentada($candidatoCda->getClaveDivision());
+            $candidatoCda->setNombreUnidadRepresentada($candidatoCda->getNombreUnidad());
+            $candidatoCda->setNombreDivisionRepresentada($candidatoCda->getNombreDivision());
+        }
         $this->getEntityManager()->persist($candidatoCda);
         $this->getEntityManager()->flush();
 
@@ -184,6 +191,7 @@ class  CandidatoCdaRepository extends ServiceEntityRepository
                 WHERE c.excluir IS NULL 
                     AND c.seleccion IS NULL
                     AND c.trimestre = :trimestre
+                    AND c.empleado NOT IN (11651)
         ";
 
         if(!empty($unidad)){

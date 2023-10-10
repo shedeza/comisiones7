@@ -59,9 +59,9 @@ final class Connection implements ServerInfoAwareConnection
      */
     public function getServerVersion()
     {
-        return $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+       // return $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        //return '15.0';
+        return '15.1';
     
     }
 

@@ -101,18 +101,6 @@ class SeleccionCdaActual
         return $this;
     }
 
-    public function getNombreDepartamento(): ?string
-    {
-        return $this->nombreDepartamento;
-    }
-
-    public function setNombreDepartamento(?string $nombreDepartamento): self
-    {
-        $this->nombreDepartamento = $nombreDepartamento;
-
-        return $this;
-    }
-
     public function getNombre(): ?string
     {
         return $this->nombre;
@@ -132,7 +120,7 @@ class SeleccionCdaActual
 
     public function setGenero(?string $genero): self
     {
-        $this->sexo = $genero;
+        $this->genero = $genero;
 
         return $this;
     }

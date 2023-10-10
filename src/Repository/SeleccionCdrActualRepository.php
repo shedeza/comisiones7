@@ -21,7 +21,7 @@ class  SeleccionCdrActualRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SeleccionCdrActual::class);
 
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function getByTipo(string $titSup){

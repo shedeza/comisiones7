@@ -89,18 +89,6 @@ class SeleccionCdrActual
         return $this;
     }
 
-    public function getNombreDepartamento(): ?string
-    {
-        return $this->nombreDepartamento;
-    }
-
-    public function setNombreDepartamento(?string $nombreDepartamento): self
-    {
-        $this->nombreDepartamento = $nombreDepartamento;
-
-        return $this;
-    }
-
     public function getNombre(): ?string
     {
         return $this->nombre;

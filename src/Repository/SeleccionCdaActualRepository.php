@@ -21,7 +21,7 @@ class  SeleccionCdaActualRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SeleccionCdaActual::class);
 
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function getByArea(int $area, string $titSup){

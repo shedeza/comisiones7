@@ -6,7 +6,7 @@ use App\Repository\SeleccionCdrRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="seleccion_cdr8")
+ * @ORM\Table(name="seleccion_cdr9")
  * @ORM\Entity(repositoryClass=SeleccionCdrRepository::class)
  */
 class SeleccionCdr 

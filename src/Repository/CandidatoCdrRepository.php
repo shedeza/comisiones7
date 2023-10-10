@@ -21,7 +21,7 @@ class CandidatoCdrRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CandidatoCdr::class);
 
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function preparaSorteo(){

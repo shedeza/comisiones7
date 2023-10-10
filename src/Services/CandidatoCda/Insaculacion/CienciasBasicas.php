@@ -2,25 +2,21 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Entity\CandidatoCda;
-use App\Repository\CandidatoCdaRepository;
-use App\Repository\SeleccionCdaRepository;
+use App\Services\CandidatoCda\SeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
+use App\Utils\Division;
 use App\Utils\Unidad;
 
 class CienciasBasicas {
 
-    private $candidatoCdaRepository;
-    private $seleccionCdaRepository;
+    private SeleccionaCDA $seleccionaCDA;
 
     public function __construct(
-        CandidatoCdaRepository $candidatoCdaRepository,
-        SeleccionCdaRepository $seleccionCdaRepository
+        SeleccionaCDA $seleccionaCDA
     )
     {
-        $this->candidatoCdaRepository = $candidatoCdaRepository;
-        $this->seleccionCdaRepository = $seleccionCdaRepository;
+        $this->seleccionaCDA = $seleccionaCDA;
     }
 
     public function __invoke()
@@ -31,33 +27,72 @@ class CienciasBasicas {
         ];
 
         /**
-         * 1S A Física-Química
+         * 1T A Física
          */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::FISICA, 'T');
 
-        $disiplinas = [Disciplina::FISICA, Disciplina::QUIMICA];
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::AZC,
-            'nombreDisciplina' => $disiplinas[rand(0,1)]
-        ]));
-        $candidatoCda->setTitularSuplente("S");
+        /**
+         * 1S A Física
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::FISICA, 'S');
 
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+        /**
+         * 1T A Matemáticas
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::MATEMATICAS, 'T');
+
+        /**
+         * 1S A Matemáticas
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::MATEMATICAS, 'S');
+
+         /**
+         * 1T I Física
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::FISICA, 'T');
+
+         /**
+         * 1S I Física
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::FISICA, 'S');
+
+        /**
+         * 1T I Matemáticas
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MATEMATICAS, 'T');
 
         /**
          * 1S I Matemáticas
          */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MATEMATICAS, 'S');
 
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
-            'nombreDisciplina' => Disciplina::MATEMATICAS
-        ]));
-        $candidatoCda->setTitularSuplente("S");
-        
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
 
+        /**
+         * 1T C Química
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::CUA, Disciplina::QUIMICA, 'T');
+
+        /**
+         * 1S I (C) Química
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::QUIMICA, 'S', [
+            'unidad' => Unidad::getUnidad(Unidad::CUA),
+        ]);
+       
+        /**
+         * 1T A (C) Física - Matemáticas
+         */
+        $disiplinas = [Disciplina::FISICA, Disciplina::MATEMATICAS];
+        $disiplina = $disiplinas[\rand(0,1)];
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'T', [
+            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        ]);
+
+        /**
+         * 1S A (C) Física - Matemáticas
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'S', [
+            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        ]);
     }
 }

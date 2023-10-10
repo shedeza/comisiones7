@@ -60,7 +60,7 @@ class SeleccionCdaController extends AbstractController
         return $this->render('seleccion_cda/index_area.html.twig', [
             'seleccionadosCda' => $seleccionadosCda,
             'area' => ['id' => $area, 'nombre' => $areas->getNombre($area)],
-            'titulos' => $titulos
+           // 'titulos' => $titulos
         ]);
     }
 

@@ -6,7 +6,7 @@ use App\Repository\CandidatoCdaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="candidato_cda8")
+ * @ORM\Table(name="candidato_cda9")
  * @ORM\Entity(repositoryClass=CandidatoCdaRepository::class)
  */
 class CandidatoCda

@@ -27,7 +27,7 @@ class SeleccionCdaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SeleccionCda::class);
         $this->mapper = $mapper;
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function save(SeleccionCda $seleccionCda) : SeleccionCda
@@ -44,7 +44,7 @@ class SeleccionCdaRepository extends ServiceEntityRepository
                 FROM App:SeleccionCda s
                     LEFT JOIN App:CandidatoCda c WITH c.empleado = s.empleado
                     WHERE c.trimestre = :trimestre 
-                    ORDER BY s.claveComisionDictaminadora ASC, s.titularSuplente DESC, s.claveUnidad ASC, s.nombreDisciplina ASC
+                    ORDER BY s.claveComisionDictaminadora ASC, s.titularSuplente DESC, s.claveUnidadRepresentada ASC, s.nombreDisciplina ASC
         ";
 
         $consulta = $this->getEntityManager()->createQuery($dql);
@@ -74,7 +74,7 @@ class SeleccionCdaRepository extends ServiceEntityRepository
                     LEFT JOIN App:CandidatoCda c WITH c.empleado = s.empleado
                     WHERE c.trimestre = :trimestre 
                         AND c.claveComisionDictaminadora = :area
-                ORDER BY s.titularSuplente DESC, s.claveUnidad ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
+                ORDER BY s.titularSuplente DESC, s.claveUnidadRepresentada ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
         ";
 
         $consulta = $this->getEntityManager()->createQuery($dql);
@@ -92,7 +92,7 @@ class SeleccionCdaRepository extends ServiceEntityRepository
                     WHERE c.trimestre = :trimestre 
                         AND c.claveComisionDictaminadora = :area
                         AND s.titularSuplente = :titSup
-                ORDER BY s.titularSuplente DESC, s.claveUnidad ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
+                ORDER BY s.titularSuplente DESC, s.claveUnidadRepresentada ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
         ";
 
         $consulta = $this->getEntityManager()->createQuery($dql);
@@ -104,11 +104,17 @@ class SeleccionCdaRepository extends ServiceEntityRepository
     }
 
 
-    public function guardaSeleccion(CandidatoCda $candidatoCda) : SeleccionCda
+    public function guardaSeleccion(CandidatoCda $candidatoCda, ?array $representa = null) : SeleccionCda
     {
 
         /** @var SeleccionCda $seleccionCda */
         $seleccionCda = $this->mapper->map($candidatoCda, SeleccionCda::class);
+        if(!empty($representa)) {
+            $seleccionCda->setClaveUnidadRepresentada($representa['unidad']['clave']);
+            //$seleccionCda->setClaveDivisionRepresentada($representa['division']['clave']);
+            $seleccionCda->setNombreUnidadRepresentada($representa['unidad']['nombre']);
+           // $seleccionCda->setNombreDivisionRepresentada($representa['division']['nombre']);
+        } 
 
         $this->getEntityManager()->persist($seleccionCda);
         try{

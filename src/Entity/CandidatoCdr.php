@@ -6,7 +6,7 @@ use App\Repository\CandidatoCdrRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="candidato_cdr8")
+ * @ORM\Table(name="candidato_cdr9")
  * @ORM\Entity(repositoryClass=CandidatoCdrRepository::class)
  */
 class CandidatoCdr
@@ -489,15 +489,4 @@ class CandidatoCdr
         return $this;
     }
 
-    public function getTitularSupplente(): ?string
-    {
-        return $this->titularSupplente;
-    }
-
-    public function setTitularSupplente(string $titularSupplente): self
-    {
-        $this->titularSupplente = $titularSupplente;
-
-        return $this;
-    }
 }

@@ -2,25 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Entity\CandidatoCda;
-use App\Repository\CandidatoCdaRepository;
-use App\Repository\SeleccionCdaRepository;
+use App\Services\CandidatoCda\SeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class Ingenieria {
-    private $candidatoCdaRepository;
-    private $seleccionCdaRepository;
+    private SeleccionaCDA $seleccionaCDA;
 
     public function __construct(
-        CandidatoCdaRepository $candidatoCdaRepository, 
-        SeleccionCdaRepository $seleccionCdaRepository
+        SeleccionaCDA $seleccionaCDA
     )
     {
-        $this->candidatoCdaRepository = $candidatoCdaRepository;
-        $this->seleccionCdaRepository = $seleccionCdaRepository;
-
+        $this->seleccionaCDA = $seleccionaCDA;
     }
 
     public function __invoke()
@@ -30,60 +24,71 @@ class Ingenieria {
             'claveComisionDictaminadora' => Area::INGENIERIA
         ];
 
-        /** 
-         * 1T I Computación
+        /**
+         * 1T A Ingeniería
          */
-        
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
-            'nombreDisciplina' => Disciplina::COMPUTACION
-        ]));
-       
-        $candidatoCda->setTitularSuplente('T');
-
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T');
 
         /**
-         * 1S A Computación
+         * 1S A Ingeniería
          */
-
-         /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::AZC,
-            'nombreDisciplina' => Disciplina::COMPUTACION
-        ]));
-       
-        $candidatoCda->setTitularSuplente('S');
-
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S');
 
         /**
-         * 2S I Ingeniería
+         * 1T A Computación
          */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
 
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
-            'nombreDisciplina' => Disciplina::INGENIERIA
-        ]));
-       
-        $candidatoCda->setTitularSuplente('S');
+        /**
+         * 1T A Computación
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
 
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+        /**
+         * 1T I Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'T');
 
-        /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' => Unidad::IZT,
-        ]));
-       
-        $candidatoCda->setTitularSuplente('S');
+        /**
+         * 1S I Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S');
 
-        $this->candidatoCdaRepository->seleccionado($candidatoCda);
-        $this->seleccionCdaRepository->guardaSeleccion($candidatoCda);
+        /**
+         * 1T A Biomédica
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::BIOMEDICA, 'T');
+
+        /**
+         * 1T A Biomédica
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::BIOMEDICA, 'S');
+
+        /**
+         * 1T L Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::LER, Disciplina::INGENIERIA, 'T');
+
+        /**
+         * 1T L (A) Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [
+            'unidad' => Unidad::getUnidad(Unidad::LER)
+        ]);
+
+        /**
+         * 1T C (A) Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T', [
+            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        ]);
+
+        /**
+         * 1T C (I) Ingeniería
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'T', [
+            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        ]);
 
     }
 }

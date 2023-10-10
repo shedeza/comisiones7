@@ -11,11 +11,11 @@ class Unidad
     const LER = "005";
     
     private const UNIDADES = [
-        '001' => ["clave" => '001', "nombre" => "Iztapalapa", "abreviatura" => "izt"],
-        "002" => ["clave" => "002", "nombre" => "Azcapotzalco", "abreviatura" => "azc"],
-        "003" => ["clave" => "003", "nombre" => "Xochimilco", "abreviatura" => "xoc"],
-        "004" => ["clave" => "004", "nombre" => "Cuajimalpa", "abreviatura" => "cua"],
-        "005" => ["clave" => "005", "nombre" => "Lerma", "abreviatura" => "ler"]
+        '001' => ["clave" => '001', "nombre" => "IZTAPALAPA", "abreviatura" => "IZT"],
+        "002" => ["clave" => "002", "nombre" => "AZCAPOTZALCO", "abreviatura" => "AZC"],
+        "003" => ["clave" => "003", "nombre" => "XOCHIMILCO", "abreviatura" => "XOC"],
+        "004" => ["clave" => "004", "nombre" => "CUAJIMALPA", "abreviatura" => "CUA"],
+        "005" => ["clave" => "005", "nombre" => "LERMA", "abreviatura" => "LER"]
     ];
 
 

@@ -27,7 +27,7 @@ class SeleccionCdrRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SeleccionCdr::class);
         $this->mapper = $mapper;
-        $this->trimestre = "22I";
+        $this->trimestre = "23P";
     }
 
     public function getAll(){

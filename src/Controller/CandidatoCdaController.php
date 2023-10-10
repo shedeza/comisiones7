@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\CandidatoCda;
 use App\Repository\CandidatoCdaRepository;
 use App\Services\CandidatoCda\Insaculacion;
 use App\Utils\Area;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
