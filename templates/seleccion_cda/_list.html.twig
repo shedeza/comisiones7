@@ -11,9 +11,9 @@
                     <th>{{ miembro | default('Candidato') }}</th>
                     <th>Unidad</th>
                     <th>Representa</th>
-                    {% if area.id < 8 %}
+                    {# % if area.id < 8 % #}
                         <th>Disciplina</th>
-                    {% endif %}
+                    {# % endif % #}
                     <th>Sexo</th>
                     <th>Titular / Suplente</th>
                 </tr>
@@ -24,9 +24,9 @@
                         <td>{{ seleccionCda.nombre | upper }}</td>
                         <td>{{ seleccionCda.nombreUnidad }}</td>
                         <td>{{ seleccionCda.nombreUnidadRepresentada }}</td>
-                        {% if area.id < 8 %}
+                        {# % if area.id < 8 % #}
                             <td>{{ seleccionCda.nombreDisciplina }}</td>
-                        {% endif %}
+                        {# % endif % #}
                         <td>{{ seleccionCda.genero }}</td>              
                         <td>{{ seleccionCda.titularSuplente }}</td>
                     </tr>

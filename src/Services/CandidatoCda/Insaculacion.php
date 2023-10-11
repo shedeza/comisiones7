@@ -13,6 +13,7 @@ use App\Services\CandidatoCda\Insaculacion\Humanidades;
 use App\Services\CandidatoCda\Insaculacion\Ingenieria;
 use App\Services\CandidatoCda\Insaculacion\ProduccionYContextoDelDisenyo;
 use App\Utils\Area;
+use Symfony\Component\Lock\LockFactory;
 
 class Insaculacion {
 
@@ -25,6 +26,7 @@ class Insaculacion {
     private $humanidades;
     private $analisisYMetodosDelDisenyo;
     private $produccionYContextoDelDisenyo;
+    private LockFactory $lockFactory;
 
     private $candidatoCdaRepository;
 
@@ -38,7 +40,8 @@ class Insaculacion {
         Humanidades $humanidades,
         AnalisisYMetodosDelDisenyo $analisisYMetodosDelDisenyo,
         ProduccionYContextoDelDisenyo $produccionYContextoDelDisenyo,
-        CandidatoCdaRepository $candidatoCdaRepository
+        CandidatoCdaRepository $candidatoCdaRepository,
+        LockFactory $lockFactory
     )
     {
         $this->cienciasBasicas = $cienciasBasicas;
@@ -50,13 +53,17 @@ class Insaculacion {
         $this->humanidades = $humanidades;
         $this->analisisYMetodosDelDisenyo = $analisisYMetodosDelDisenyo;
         $this->produccionYContextoDelDisenyo = $produccionYContextoDelDisenyo;
-
         $this->candidatoCdaRepository =  $candidatoCdaRepository;
+        $this->lockFactory = $lockFactory;
     }
 
     public function __invoke($area = null)
     {
-        
+     
+        $lock = $this->lockFactory->createLock(1000);
+        /** Bloqueo inicio */
+        $lock->acquire(true);
+
         if($area){
             $this->candidatoCdaRepository->preparaSorteo($area);
 
@@ -101,6 +108,8 @@ class Insaculacion {
             ($this->analisisYMetodosDelDisenyo)();
             ($this->produccionYContextoDelDisenyo)();
         }
+
+        $lock->release();
     }
 
 }

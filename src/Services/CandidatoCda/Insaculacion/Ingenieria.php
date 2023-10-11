@@ -37,12 +37,12 @@ class Ingenieria {
         /**
          * 1T A Computación
          */
-  //      ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
 
         /**
          * 1T A Computación
          */
-  //      ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
 
         /**
          * 1T I Ingeniería
