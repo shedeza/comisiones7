@@ -37,12 +37,12 @@ class Ingenieria {
         /**
          * 1T A Computación
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
+  //      ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
 
         /**
          * 1T A Computación
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
+  //      ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
 
         /**
          * 1T I Ingeniería
@@ -57,12 +57,12 @@ class Ingenieria {
         /**
          * 1T A Biomédica
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::BIOMEDICA, 'T');
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::CIENCIAS_BIOMEDICAS, 'T');
 
         /**
          * 1T A Biomédica
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::BIOMEDICA, 'S');
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::CIENCIAS_BIOMEDICAS, 'S');
 
         /**
          * 1T L Ingeniería
@@ -72,21 +72,21 @@ class Ingenieria {
         /**
          * 1T L (A) Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 
         /**
          * 1T C (A) Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T', [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 
         /**
          * 1T C (I) Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'T', [
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 

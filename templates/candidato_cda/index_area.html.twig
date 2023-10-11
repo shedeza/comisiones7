@@ -10,7 +10,7 @@
             <tr>
                 <th>Candidato</th>
                 <th>Unidad</th>
-                <th>División</th>
+               {# <th>División</th> #}
                 {% if area.id < 8 %}
                     <th>Disciplina</th>
                 {% endif %}
@@ -19,10 +19,10 @@
         </thead>
         <tbody>
         {% for candidato_cda in candidatosCda %}
-            <tr class="small">
+            <tr class="">
                 <td>{{ candidato_cda.nombre }}</td>
                 <td>{{ candidato_cda.nombreUnidad }}</td>
-                <td>{{ candidato_cda.nombreDivision  }}</td>
+                {# <td>{{ candidato_cda.nombreDivision  }}</td> #}
                 {% if area.id < 8 %}
                     <td>{{ candidato_cda.nombreDisciplina }}</td>
                 {% endif %}

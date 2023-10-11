@@ -8,7 +8,6 @@ class Disciplina {
     const MATEMATICAS = "MATEMATICAS";
     const QUIMICA = "QUIMICA";
 
-    const BIOMEDICA = "BIOMEDICA";
     const COMPUTACION = "COMPUTACION";
     const INGENIERIA = "INGENIERIA";
 

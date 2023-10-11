@@ -13,7 +13,7 @@ security:
             memory:
                 users:
                     comisiones:
-                        password: 'RG_com2021'
+                        password: 'RG_com2023'
                         roles: ['ROLE_USER']
 
     firewalls:

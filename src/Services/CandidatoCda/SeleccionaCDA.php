@@ -20,13 +20,20 @@ class SeleccionaCDA
         $this->seleccionCdaRepository = $seleccionCdaRepository;
     }
 
-    public function __invoke(array $parameters, $unidad, $disiplina, $titularSuplente, ?array $representa = null): CandidatoCda
-    {
+    public function __invoke(array $parameters, string $unidad, ?string $disiplina, string $titularSuplente, array $unidades = [], array $disiplinas = [], ?array $representa = null): CandidatoCda
+    {    
+        if ($disiplina) {
+            $param =  array_merge($parameters, [
+                'claveUnidad' =>$unidad,
+                'nombreDisciplina' => $disiplina,
+            ]);
+        } else {
+            $param =  array_merge($parameters, [
+                'claveUnidad' =>$unidad,
+            ]);
+        }
         /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato(array_merge($parameters, [
-            'claveUnidad' =>$unidad,
-            'nombreDisciplina' => $disiplina,
-        ]));
+        $candidatoCda = $this->candidatoCdaRepository->getCandidato($param, $unidades, $disiplinas);
         $candidatoCda->setTitularSuplente($titularSuplente);
 
         $this->candidatoCdaRepository->seleccionado($candidatoCda, $representa );

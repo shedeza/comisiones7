@@ -69,7 +69,7 @@ class SeleccionCdaRepository extends ServiceEntityRepository
 
     public function getByArea(int $area){
         $dql = "
-            SELECT s.empleado, s.claveComisionDictaminadora, s.nomAux, s.nombreUnidad, s.nombreDivision, s.nombreDisciplina, s.nombreDepartamento, s.genero, s.titularSuplente, c.nombre
+            SELECT s.empleado, s.claveComisionDictaminadora, s.nomAux, s.nombreUnidad, s.nombreDivision, s.nombreDisciplina, s.nombreDepartamento, s.genero, s.titularSuplente, s.nombreUnidadRepresentada, c.nombre
                 FROM App:SeleccionCda s
                     LEFT JOIN App:CandidatoCda c WITH c.empleado = s.empleado
                     WHERE c.trimestre = :trimestre 

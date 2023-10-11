@@ -84,14 +84,14 @@ class CienciasBasicas {
          */
         $disiplinas = [Disciplina::FISICA, Disciplina::MATEMATICAS];
         $disiplina = $disiplinas[\rand(0,1)];
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'T', [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'T', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 
         /**
          * 1S A (C) Física - Matemáticas
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'S', [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
     }

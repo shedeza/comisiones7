@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Utils\Area;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,9 +14,11 @@ class AppController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('app/index.html.twig', [
-            
-        ]);
+        return $this->redirectToRoute('candidato_cda_index', [
+
+        ], Response::HTTP_SEE_OTHER);
+
+        //return $this->render('app/index.html.twig', [  ]);
     }
 
     /**
