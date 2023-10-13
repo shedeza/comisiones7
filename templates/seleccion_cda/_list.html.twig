@@ -14,7 +14,7 @@
                     {# % if area.id < 8 % #}
                         <th>Disciplina</th>
                     {# % endif % #}
-                    <th>Sexo</th>
+                    {# <th>Sexo</th> #}
                     <th>Titular / Suplente</th>
                 </tr>
             </thead>
@@ -27,9 +27,11 @@
                         {# % if area.id < 8 % #}
                             <td>{{ seleccionCda.nombreDisciplina }}</td>
                         {# % endif % #}
-                        <td>{{ seleccionCda.genero }}</td>              
+                        {# <td>{{ seleccionCda.genero }}</td>  #}
                         <td>{{ seleccionCda.titularSuplente }}</td>
                     </tr>
+
+                    {#
                     {% if seleccionCda.titularSuplente == 'T' %}
                         {% if seleccionCda.genero == 'M' %}
                             {% set countMT = countMT + 1 %}
@@ -43,14 +45,19 @@
                             {% set countFS = countFS + 1 %}
                         {% endif %}
                     {% endif %}
+                    #}
                 {% else %}
                     <tr>
                         <td colspan="28">no records found</td>
                     </tr>
                 {% endfor %}
+
+                {# 
                 <tr>
                     <th colspan='8' class="text-end"> Total: Titulares M: {{ countMT }}  F: {{ countFT }}, Suplentes  M: {{ countMS }}  F: {{ countFS }}</th>
                 </tr>
+                #}
+               
             </tbody>
         </table>
     {% endif %}

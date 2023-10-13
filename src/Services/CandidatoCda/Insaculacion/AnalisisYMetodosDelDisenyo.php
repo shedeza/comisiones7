@@ -35,7 +35,7 @@ class AnalisisYMetodosDelDisenyo {
             ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'S');
         }
 
-        for($i =  0; $i < 2; $i++) {
+        for($i =  0; $i < 3; $i++) {
             /**
              * 1T X 
              */
@@ -47,16 +47,6 @@ class AnalisisYMetodosDelDisenyo {
             ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S');
         }
 
-            /**
-             * 1T X 
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T');
-
-            /**
-             * 1S A (X)
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'S', [], [], [
-                'unidad' => Unidad::getUnidad(Unidad::XOC)
-            ]);
+       
     }
 }

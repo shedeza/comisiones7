@@ -49,6 +49,7 @@ class CandidatoCdaController extends AbstractController
      */
     public function sorteo(Insaculacion $insaculacion): Response
     {
+        \sleep(\rand(1,3));
         // Se realiza la Insaculación 
         ($insaculacion)();
 
@@ -62,6 +63,7 @@ class CandidatoCdaController extends AbstractController
      */
     public function sorteoArea(Insaculacion $insaculacion, int $area): Response
     {
+        \sleep(2);
         // Se realiza la Insaculación 
         ($insaculacion)($area);
 

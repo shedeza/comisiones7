@@ -66,7 +66,7 @@ class CienciasDeLaSalud {
         /**
          * 1T X  
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA]);
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS]);
 
         /**
          * 1S X 
@@ -76,14 +76,14 @@ class CienciasDeLaSalud {
         /**
          * 1T X 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [Disciplina::MEDICINA, Disciplina::NUTRICION], [
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [$seleccionaCDA->getDisciplina(), Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 
         /**
          * 1T S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S', [], [Disciplina::MEDICINA, Disciplina::NUTRICION], [
+        ($this->seleccionaCDA)($parameters, Unidad::XOC,  $seleccionaCDA ->getDisciplina(), 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 

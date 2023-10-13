@@ -44,14 +44,12 @@ class CienciasBiologicas {
          */
         /** @var CandidatoCda $candidatoCDA */
         $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T');
-        if ($candidatoCDA->getDisciplina() == Disciplina::BIOLOGIA) {
-            $disciplinas[] = Disciplina::BIOLOGIA;
-        }
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
             $countMVZ++;
-        }
-        if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
+        } else if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
             $countQFB++;
+        } else {
+            $disciplinas[] = $candidatoCDA->getDisciplina();
         }
     
         /**
@@ -74,20 +72,18 @@ class CienciasBiologicas {
          * 1T X 
          */
         $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], $disciplinas);
-        if ($candidatoCDA->getDisciplina() == Disciplina::BIOLOGIA) {
-            $disciplinas[] = Disciplina::BIOLOGIA;
-        }
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
             $countMVZ++;
             if($countMVZ > 1) {
                 $disciplinas[] = Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA;
             }
-        }
-        if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
+        } else if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
             $countQFB++;
             if($countQFB > 1) {
                 $disciplinas[] = Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA;
             }
+        } else {
+            $disciplinas[] = $candidatoCDA->getDisciplina();
         }
 
         /**
@@ -106,20 +102,18 @@ class CienciasBiologicas {
         $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S', [], $disciplinas, [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
-        if ($candidatoCDA->getDisciplina() == Disciplina::BIOLOGIA) {
-            $disciplinas[] = Disciplina::BIOLOGIA;
-        }
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
             $countMVZ++;
             if($countMVZ > 1) {
                 $disciplinas[] = Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA;
             }
-        }
-        if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
+        } else if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
             $countQFB++;
             if($countQFB > 1) {
                 $disciplinas[] = Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA;
             }
+        } else {
+            $disciplinas[] = $candidatoCDA->getDisciplina();
         }
 
         /**
@@ -133,7 +127,7 @@ class CienciasBiologicas {
         /**
          * 1T I (C) 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'S', [], $disciplinas, [
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, $candidatoCDA->getDisciplina(), 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
     }

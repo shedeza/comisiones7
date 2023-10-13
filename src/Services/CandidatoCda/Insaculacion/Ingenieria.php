@@ -72,7 +72,7 @@ class Ingenieria {
         /**
          * 1T L (A) Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [], [], [
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 
@@ -86,7 +86,7 @@ class Ingenieria {
         /**
          * 1T C (I) Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S', [], [], [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 

@@ -74,7 +74,7 @@ class CienciasSociales {
         /**
          * 1T X 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], $disciplinas);
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], array_merge($disciplinas, [Disciplina::POLITICA]));
         if($seleccionaCDA->getDisciplina() == Disciplina::POLITICA) {
             $disciplinas[] = Disciplina::POLITICA;
         } 

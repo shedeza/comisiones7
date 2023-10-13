@@ -25,17 +25,19 @@ class CienciasEconomicoAdministrativas {
 
         $disciplinas = [];
         $countAdministracion = 0;
+        $countEconomia = 0;
 
         /**
          * 1T A 
          */
         $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T', [], [Disciplina::FINANZAS]);
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
-            $countAdministracion++;
-        }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
             $disciplinas[] = Disciplina::ECONOMIA;
         }
+        if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
+            $countAdministracion++;
+        }
+
 
         /**
          * 1S A 
@@ -43,17 +45,41 @@ class CienciasEconomicoAdministrativas {
         ($this->seleccionaCDA)($parameters, Unidad::AZC, $seleccionaCDA->getDisciplina(), 'S');
 
         /**
-         * 1T I 
+         * 1T A 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T', [], $disciplinas);
-        if ($seleccionaCDA->getDisciplina() == Disciplina::FINANZAS) {
-            $disciplinas[] = Disciplina::FINANZAS;
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T', [], array_merge($disciplinas, [$seleccionaCDA->getDisciplina(), Disciplina::FINANZAS]));
+        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
+            $disciplinas[] = Disciplina::ECONOMIA;
         }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
+            if ($countAdministracion > 2) {
+                $disciplinas[] = Disciplina::ADMINISTRACION;
+            }
+        }
+
+
+        /**
+         * 1S A 
+         */
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, $seleccionaCDA->getDisciplina(), 'S');
+
+
+        /**
+         * 1T I 
+         */
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T');
+        if ($seleccionaCDA->getDisciplina() == Disciplina::FINANZAS) {
+            $disciplinas[] = Disciplina::FINANZAS;
         }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
             $disciplinas[] = Disciplina::ECONOMIA;
+        }
+        if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
+            $countAdministracion++;
+            if ($countAdministracion > 2) {
+                $disciplinas[] = Disciplina::ADMINISTRACION;
+            }
         }
 
         /**
@@ -64,18 +90,18 @@ class CienciasEconomicoAdministrativas {
          /**
          * 1T I 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T', [], $disciplinas);
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T', [],  array_merge($disciplinas, [$seleccionaCDA->getDisciplina()]));
         if ($seleccionaCDA->getDisciplina() == Disciplina::FINANZAS) {
             $disciplinas[] = Disciplina::FINANZAS;
+        }
+        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
+            $disciplinas[] = Disciplina::ECONOMIA;
         }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
             if ($countAdministracion > 2) {
                 $disciplinas[] = Disciplina::ADMINISTRACION;
             }
-        }
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
-            $disciplinas[] = Disciplina::ECONOMIA;
         }
 
         /**
@@ -86,12 +112,12 @@ class CienciasEconomicoAdministrativas {
         /**
          * 1T X 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::ECONOMIA, 'T');
+        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::ECONOMIA, 'T');
 
         /**
          * 1S X 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::ECONOMIA, 'S');
+        ($this->seleccionaCDA)($parameters, Unidad::XOC, $seleccionaCDA->getDisciplina(), 'S');
         
          /**
          * 1T C 
@@ -101,7 +127,7 @@ class CienciasEconomicoAdministrativas {
         /**
          * 1S X (C) 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::ECONOMIA, 'S', [], [], [
+        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::ECONOMIA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
     }

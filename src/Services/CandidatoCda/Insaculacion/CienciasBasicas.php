@@ -75,7 +75,7 @@ class CienciasBasicas {
         /**
          * 1S I (C) Química
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::QUIMICA, 'S', [
+        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::QUIMICA, 'S', [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA),
         ]);
        
