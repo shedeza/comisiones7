@@ -1,4 +1,4 @@
-Dictaminadora, CANDIDATO, Unidad, División, Disciplina, Género, Titular / Suplente
+Dictaminadora, CANDIDATO, Unidad, División, Disciplina, Titular / Suplente
 {% for seleccion_cda in seleccion_cdas %}
-{{ area.getNombre(seleccion_cda.claveComisionDictaminadora) | upper }}, {{ seleccion_cda.nombre | upper }}, {{ seleccion_cda.nombreUnidad }}, {{ seleccion_cda.nombreDivision }}, {{ seleccion_cda.nombreDisciplina }}, {{ seleccion_cda.genero }}, {{ seleccion_cda.titularSuplente }}
+{{ area.getNombre(seleccion_cda.claveComisionDictaminadora) | upper }}, {{ seleccion_cda.nombre | upper }}, {{ seleccion_cda.nombreUnidad }}, {{ seleccion_cda.nombreDivision }}, {{ seleccion_cda.nombreDisciplina }}, {{ seleccion_cda.titularSuplente }}
 {% endfor %}
