@@ -6,7 +6,7 @@ use App\Entity\CandidatoCda;
 use App\Repository\CandidatoCdaRepository;
 use App\Repository\SeleccionCdaRepository;
 
-class SeleccionaCDA 
+class NewSeleccionaCDA 
 {
     private CandidatoCdaRepository $candidatoCdaRepository;
     private SeleccionCdaRepository $seleccionCdaRepository;
@@ -22,32 +22,22 @@ class SeleccionaCDA
 
     public function __invoke(
         array $parameters, 
-        string $unidad, 
-        ?string $disiplina, 
         string $titularSuplente, 
+        int $orden,
         array $unidades = [], 
         array $disiplinas = [], 
         ?array $representa = null
     ): ?CandidatoCda
     {    
-        if ($disiplina) {
-            $param =  array_merge($parameters, [
-                'claveUnidad' =>$unidad,
-                'nombreDisciplina' => $disiplina,
-            ]);
-        } else {
-            $param =  array_merge($parameters, [
-                'claveUnidad' =>$unidad,
-            ]);
-        }
+
         /** @var CandidatoCda $candidatoCda */
-        $candidatoCda = $this->candidatoCdaRepository->getCandidato($param, $unidades, $disiplinas);
+        $candidatoCda = $this->candidatoCdaRepository->getCandidato($parameters, $unidades, $disiplinas);
 
         if( $candidatoCda ) {
             $candidatoCda->setTitularSuplente($titularSuplente);
 
             $this->candidatoCdaRepository->seleccionado($candidatoCda, $representa );
-            $this->seleccionCdaRepository->guardaSeleccion($candidatoCda, $representa );
+            $this->seleccionCdaRepository->newGuardaSeleccion($candidatoCda, $orden, $representa );
         }
 
         return $candidatoCda;

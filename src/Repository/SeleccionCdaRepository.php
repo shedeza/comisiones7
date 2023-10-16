@@ -69,12 +69,12 @@ class SeleccionCdaRepository extends ServiceEntityRepository
 
     public function getByArea(int $area){
         $dql = "
-            SELECT s.empleado, s.claveComisionDictaminadora, s.nomAux, s.nombreUnidad, s.nombreDivision, s.nombreDisciplina, s.nombreDepartamento, s.genero, s.titularSuplente, s.nombreUnidadRepresentada, c.nombre
+            SELECT s.empleado, s.claveComisionDictaminadora, s.nomAux, s.nombreUnidad, s.nombreDivision, s.nombreDisciplina, s.nombreDepartamento, s.genero, s.titularSuplente, s.nombreUnidadRepresentada, c.nombre, s.orden
                 FROM App:SeleccionCda s
                     LEFT JOIN App:CandidatoCda c WITH c.empleado = s.empleado
                     WHERE c.trimestre = :trimestre 
                         AND c.claveComisionDictaminadora = :area
-                ORDER BY s.titularSuplente DESC, s.claveUnidadRepresentada ASC, s.claveDisiplina ASC, s.nombreDisciplina ASC
+                ORDER BY s.titularSuplente DESC, s.orden ASC
         ";
 
         $consulta = $this->getEntityManager()->createQuery($dql);
@@ -109,6 +109,29 @@ class SeleccionCdaRepository extends ServiceEntityRepository
 
         /** @var SeleccionCda $seleccionCda */
         $seleccionCda = $this->mapper->map($candidatoCda, SeleccionCda::class);
+        if(!empty($representa)) {
+            $seleccionCda->setClaveUnidadRepresentada($representa['unidad']['clave']);
+            //$seleccionCda->setClaveDivisionRepresentada($representa['division']['clave']);
+            $seleccionCda->setNombreUnidadRepresentada($representa['unidad']['nombre']);
+           // $seleccionCda->setNombreDivisionRepresentada($representa['division']['nombre']);
+        } 
+
+        $this->getEntityManager()->persist($seleccionCda);
+        try{
+            $this->getEntityManager()->flush();
+        } catch(Exception $e) {
+
+        }
+
+        return $seleccionCda;
+    }
+
+    public function newGuardaSeleccion(CandidatoCda $candidatoCda, int $orden,?array $representa = null) : SeleccionCda
+    {
+
+        /** @var SeleccionCda $seleccionCda */
+        $seleccionCda = $this->mapper->map($candidatoCda, SeleccionCda::class);
+        $seleccionCda->setOrden($orden);
         if(!empty($representa)) {
             $seleccionCda->setClaveUnidadRepresentada($representa['unidad']['clave']);
             //$seleccionCda->setClaveDivisionRepresentada($representa['division']['clave']);

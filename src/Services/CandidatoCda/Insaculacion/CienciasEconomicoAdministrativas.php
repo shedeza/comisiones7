@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class CienciasEconomicoAdministrativas {
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -25,32 +25,28 @@ class CienciasEconomicoAdministrativas {
 
         $disciplinas = [];
         $countAdministracion = 0;
-        $countEconomia = 0;
 
         /**
-         * 1T A 
+         * AZC - 1 T,  1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T', [], [Disciplina::FINANZAS]);
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
-            $disciplinas[] = Disciplina::ECONOMIA;
-        }
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 1, [], [Disciplina::FINANZAS]);
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
-        }
+        }   
 
-
-        /**
-         * 1S A 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 1);
 
         /**
-         * 1T A 
+         * AZC - 1 T,  1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T', [], array_merge($disciplinas, [$seleccionaCDA->getDisciplina(), Disciplina::FINANZAS]));
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
-            $disciplinas[] = Disciplina::ECONOMIA;
-        }
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 2, [], array_merge($disciplinas, [$seleccionaCDA->getDisciplina(), Disciplina::FINANZAS]));
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
             if ($countAdministracion > 2) {
@@ -58,23 +54,21 @@ class CienciasEconomicoAdministrativas {
             }
         }
 
-
-        /**
-         * 1S A 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 2);
 
 
         /**
-         * 1T I 
+         * IZT - 1 T,  1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 3);
+
         if ($seleccionaCDA->getDisciplina() == Disciplina::FINANZAS) {
             $disciplinas[] = Disciplina::FINANZAS;
         }
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
-            $disciplinas[] = Disciplina::ECONOMIA;
-        }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
             if ($countAdministracion > 2) {
@@ -82,21 +76,19 @@ class CienciasEconomicoAdministrativas {
             }
         }
 
-        /**
-         * 1S I 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 3);
 
-         /**
-         * 1T I 
+        /**
+         * IZT - 1 T,  1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T', [],  array_merge($disciplinas, [$seleccionaCDA->getDisciplina()]));
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 4, [],  array_merge($disciplinas, [$seleccionaCDA->getDisciplina()]));
         if ($seleccionaCDA->getDisciplina() == Disciplina::FINANZAS) {
             $disciplinas[] = Disciplina::FINANZAS;
         }
-        if ($seleccionaCDA->getDisciplina() == Disciplina::ECONOMIA) {
-            $disciplinas[] = Disciplina::ECONOMIA;
-        }
         if ($seleccionaCDA->getDisciplina() == Disciplina::ADMINISTRACION) {
             $countAdministracion++;
             if ($countAdministracion > 2) {
@@ -104,30 +96,31 @@ class CienciasEconomicoAdministrativas {
             }
         }
 
-        /**
-         * 1S I 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 4);
 
         /**
-         * 1T X 
+         * XOC - 1 T, 1 S
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::ECONOMIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+            'nombreDisciplina' => Disciplina::ECONOMIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 5);
+
+        ($this->newSeleccionaCDA)($param, 'S', 5);
 
         /**
-         * 1S X 
+         * CUA - 1 T, AZC (CUA) - 1 S
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, $seleccionaCDA->getDisciplina(), 'S');
-        
-         /**
-         * 1T C 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::CUA, Disciplina::ECONOMIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::CUA,
+            'nombreDisciplina' => Disciplina::ADMINISTRACION,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 6);
 
-        /**
-         * 1S X (C) 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::ECONOMIA, 'S', [], [], [
+        $param['claveUnidad'] =  Unidad::AZC;
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
     }

@@ -2,21 +2,20 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
-use App\Utils\Division;
 use App\Utils\Unidad;
 
 class CienciasBasicas {
 
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -27,55 +26,63 @@ class CienciasBasicas {
         ];
 
         /**
-         * 1T A Física
+         * AZC - 1 T Física,  1 S Física
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::FISICA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::FISICA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 1);
+
+        ($this->newSeleccionaCDA)($param, 'S', 1);
 
         /**
-         * 1S A Física
+         * AZC - 1 T Matemáticas, 1 S Matemáticas
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::FISICA, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::MATEMATICAS,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 2);
 
-        /**
-         * 1T A Matemáticas
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::MATEMATICAS, 'T');
-
-        /**
-         * 1S A Matemáticas
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::MATEMATICAS, 'S');
+        ($this->newSeleccionaCDA)($param, 'S', 2);
 
          /**
-         * 1T I Física
+         * IZT - 1 T Física, 1 S Física 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::FISICA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::FISICA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 3);
 
-         /**
-         * 1S I Física
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::FISICA, 'S');
-
-        /**
-         * 1T I Matemáticas
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MATEMATICAS, 'T');
+        ($this->newSeleccionaCDA)($param, 'S', 3);
 
         /**
-         * 1S I Matemáticas
+         * IZT - 1 T Matemáticas, 1 S Matemáticas
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MATEMATICAS, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::MATEMATICAS,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 4);
 
+        ($this->newSeleccionaCDA)($param, 'S', 4);
 
         /**
-         * 1T C Química
+         * CUA - 1 T C Química, 1 S IZT (CUA) Química
          */
-        ($this->seleccionaCDA)($parameters, Unidad::CUA, Disciplina::QUIMICA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::CUA,
+            'nombreDisciplina' => Disciplina::QUIMICA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 5);
 
-        /**
-         * 1S I (C) Química
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::QUIMICA, 'S', [], [], [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::QUIMICA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'S', 5, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA),
         ]);
        
@@ -83,16 +90,15 @@ class CienciasBasicas {
          * 1T A (C) Física - Matemáticas
          */
         $disiplinas = [Disciplina::FISICA, Disciplina::MATEMATICAS];
-        $disiplina = $disiplinas[\rand(0,1)];
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'T', [], [], [
-            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => $disiplinas[\rand(0,1)],
         ]);
-
-        /**
-         * 1S A (C) Física - Matemáticas
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, $disiplina, 'S', [], [], [
-            'unidad' => Unidad::getUnidad(Unidad::CUA)
+        ($this->newSeleccionaCDA)($param, 'T', 6, [], [], [
+            'unidad' => Unidad::getUnidad(Unidad::CUA),
+        ]);
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], [], [
+            'unidad' => Unidad::getUnidad(Unidad::CUA),
         ]);
     }
 }

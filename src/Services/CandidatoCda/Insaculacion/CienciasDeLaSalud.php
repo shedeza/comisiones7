@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class CienciasDeLaSalud {
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -22,68 +22,78 @@ class CienciasDeLaSalud {
         $parameters = [
             'claveComisionDictaminadora' => Area::CIENCIAS_DE_LA_SALUD
         ];   
-        
-        /**
-         * 1T I Medicina
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MEDICINA, 'T');
 
         /**
-         * 1S I 
+         * IZT - 1 T , 1 S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::MEDICINA, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 1, [], [Disciplina::ENFERMERIA]);
+
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 1);
 
         /**
-         * 1T I 
+         * IZT - 1 T , 1 S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT,  Disciplina::CIENCIAS_BIOMEDICAS, 'T');
-        
-        /**
-         * 1S I 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT,Disciplina::CIENCIAS_BIOMEDICAS, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 2, [], [Disciplina::ENFERMERIA, $seleccionaCDA->getDisciplina()]);
+
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 2);
 
         /**
-         * 1T X Nutrición
+         * XOC - 1 T Nutrición, 1 S Nutrición
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::NUTRICION, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+            'nombreDisciplina' => Disciplina::NUTRICION,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 3);
+
+        ($this->newSeleccionaCDA)($param, 'S', 3);
 
         /**
-         * 1S X Nutrición
+         * XOC - 1 T Medicina, 1 S Medicina
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::NUTRICION, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+            'nombreDisciplina' => Disciplina::MEDICINA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 4);
+
+        ($this->newSeleccionaCDA)($param, 'S', 4);
 
         /**
-         * 1T X Medicina
+         * XOC - 1 T , 1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::MEDICINA, 'T');
-
-        /**
-         * 1S X Medicina
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::MEDICINA, 'S');
-
-        /**
-         * 1T X  
-         */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS]);
-
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 5, [], [Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS]);
         /**
          * 1S X 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 5);
+
+
 
         /**
-         * 1T X 
+         * XOC (LER) - 1 T , 1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], [$seleccionaCDA->getDisciplina(), Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS], [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+        ]);
+        $seleccionaCDA =  ($this->newSeleccionaCDA)($param, 'T', 6, [], [$seleccionaCDA->getDisciplina(), Disciplina::ENFERMERIA, Disciplina::PSICOLOGIA, Disciplina::MEDICINA, Disciplina::CIENCIAS_BIOMEDICAS], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 
-        /**
-         * 1T S 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC,  $seleccionaCDA ->getDisciplina(), 'S', [], [], [
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 

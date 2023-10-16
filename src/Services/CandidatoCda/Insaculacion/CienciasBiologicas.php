@@ -2,21 +2,20 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Entity\CandidatoCda;
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class CienciasBiologicas {
 
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA =  $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -30,20 +29,24 @@ class CienciasBiologicas {
         $countQFB = 0;
 
         /**
-         * 1T I Biología
+         * IZT - 1 T Biología, 1 S Biología
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::BIOLOGIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::BIOLOGIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 1);
+
+        ($this->newSeleccionaCDA)($param, 'S', 1);
+
 
         /**
-         * 1S I Biología
+         * IZT - 1 T , 1 S (Disciplina igual al titular) 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::BIOLOGIA, 'S');
-
-        /**
-         * 1T I 
-         */
-        /** @var CandidatoCda $candidatoCDA */
-        $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $candidatoCDA = ($this->newSeleccionaCDA)($param, 'T', 2);
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
             $countMVZ++;
         } else if ($candidatoCDA->getDisciplina() == Disciplina::QUIMICA_FARMACEUTICA_BIOLOGICA) {
@@ -52,26 +55,28 @@ class CienciasBiologicas {
             $disciplinas[] = $candidatoCDA->getDisciplina();
         }
     
-        /**
-         * 1S I 
-         */
-        /** @var CandidatoCda $candidatoCDA */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, $candidatoCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $candidatoCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 2);
+
 
         /**
-         * 1T X Biología
+         * XOC - 1 T Biología, 1 S Biología
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::BIOLOGIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+            'nombreDisciplina' => Disciplina::BIOLOGIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 3);
+
+        ($this->newSeleccionaCDA)($param, 'S', 3);
 
         /**
-         * 1S X Biología
+         * XOC - 1 T , 1 S (Disciplina igual al titular) 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::BIOLOGIA, 'S');
-
-        /**
-         * 1T X 
-         */
-        $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], $disciplinas);
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+        ]);
+        $candidatoCDA = ($this->newSeleccionaCDA)($param, 'T', 4, [], $disciplinas);
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
             $countMVZ++;
             if($countMVZ > 1) {
@@ -86,20 +91,22 @@ class CienciasBiologicas {
             $disciplinas[] = $candidatoCDA->getDisciplina();
         }
 
-        /**
-         * 1S X 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, $candidatoCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $candidatoCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 4);
 
         /**
-         * 1T C ING. BIOQUÍM. IND.
+         * CUA - 1 T  ING. BIOQUÍM. IND., XOC (CUA) - 1 S
          */
-        ($this->seleccionaCDA)($parameters, Unidad::CUA, Disciplina::INGENIERIA_BIOQUIMICA_INDUSTRIAL, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::CUA,
+            'nombreDisciplina' => Disciplina::INGENIERIA_BIOQUIMICA_INDUSTRIAL,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 5);
 
-        /**
-         * 1S X (C) 
-         */
-        $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S', [], $disciplinas, [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+        ]);
+        $candidatoCDA = ($this->newSeleccionaCDA)($param, 'S', 5, [], $disciplinas, [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
         if ($candidatoCDA->getDisciplina() == Disciplina::MEDICINA_VETERINARIA_Y_ZOOTECNIA) {
@@ -117,18 +124,21 @@ class CienciasBiologicas {
         }
 
         /**
-         * 1T I (C) 
+         * IZT (LLER) - 1 T, 1 S (Disciplina igual al titular) 
          */
-        $candidatoCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T', [], $disciplinas, [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $candidatoCDA = ($this->newSeleccionaCDA)($param, 'T', 6, [], $disciplinas, [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
-        $disciplinas[] = $candidatoCDA->getDisciplina();
 
-        /**
-         * 1T I (C) 
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, $candidatoCDA->getDisciplina(), 'S', [], [], [
+        $param['nombreDisciplina'] = $candidatoCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], $disciplinas, [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
+
+
+
     }
 }

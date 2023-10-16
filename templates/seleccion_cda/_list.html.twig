@@ -8,6 +8,7 @@
         <table id="table-content" class="table table-sm table-striped text-center">
             <thead>
                 <tr class="table-dark">
+                    <th></th>
                     <th>{{ miembro | default('Candidato') }}</th>
                     <th>Unidad</th>
                     <th>Representa</th>
@@ -21,6 +22,7 @@
             <tbody>
                 {% for seleccionCda in seleccionadosCda %}
                     <tr class="">
+                        <td class="small">{{ seleccionCda.orden }}</td>
                         <td>{{ seleccionCda.nombre | upper }}</td>
                         <td>{{ seleccionCda.nombreUnidad }}</td>
                         <td>{{ seleccionCda.nombreUnidadRepresentada }}</td>
@@ -28,7 +30,7 @@
                             <td>{{ seleccionCda.nombreDisciplina }}</td>
                         {# % endif % #}
                         {# <td>{{ seleccionCda.genero }}</td>  #}
-                        <td>{{ seleccionCda.titularSuplente }}</td>
+                        <td>{{ seleccionCda.titularSuplente }} </td>
                     </tr>
 
                     {#

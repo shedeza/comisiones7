@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class CienciasSociales {
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -27,19 +27,25 @@ class CienciasSociales {
         $countSocilogia = 0;
 
         /**
-         * 1T A Sociología
+         * AZC - 1 T Sociología, 1 S Sociología
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::SOCIOLOGIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::SOCIOLOGIA
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 1);
+
+        ($this->newSeleccionaCDA)($param, 'S', 1);
+
 
         /**
-         * 1S A Sociología
+         * IZT - 1 T, 1 S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::SOCIOLOGIA, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 2);
 
-        /**
-         * 1T I 
-         */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, null, 'T');
         if($seleccionaCDA->getDisciplina() == Disciplina::POLITICA) {
             $disciplinas[] = Disciplina::POLITICA;
         } 
@@ -56,25 +62,28 @@ class CienciasSociales {
            $countSocilogia++;
         } 
 
-        /**
-         * 1S I 
-         */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::IZT, $seleccionaCDA->getDisciplina(), 'S');
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 2);
 
         /**
-         * 1T X Política
+         * XOC - 1 T Política, 1 S Política
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::POLITICA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+            'nombreDisciplina' => Disciplina::POLITICA
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 3);
+
+        ($this->newSeleccionaCDA)($param, 'S', 3);
 
         /**
-         * 1S X Política 
+         * XOC - 1 T , 1 S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, Disciplina::POLITICA, 'S'); 
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::XOC,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 4, [], array_merge($disciplinas, [Disciplina::POLITICA]));
 
-        /**
-         * 1T X 
-         */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T', [], array_merge($disciplinas, [Disciplina::POLITICA]));
         if($seleccionaCDA->getDisciplina() == Disciplina::POLITICA) {
             $disciplinas[] = Disciplina::POLITICA;
         } 
@@ -94,31 +103,30 @@ class CienciasSociales {
                 $disciplinas[] = Disciplina::PSICOLOGIA;
             }
         }  
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 4); 
 
         /**
-         * 1S X  
+         * XOC - 1 T , 1 S 
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, $seleccionaCDA->getDisciplina(), 'S'); 
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::CUA,
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 5, [], $disciplinas);
 
-        /**
-         * 1T C 
-         */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::CUA, null, 'T', [], $disciplinas);
-
-        /**
-         * 1S C  
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::CUA, $seleccionaCDA->getDisciplina(), 'S'); 
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 5); 
         
-
         /**
-         * 1T L 
+         * LER - 1 T, 1 S 
          */
-        $seleccionaCDA = ($this->seleccionaCDA)($parameters, Unidad::LER, Disciplina::POLITICA, 'T', []);
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::LER,
+            'nombreDisciplina' => Disciplina::POLITICA
+        ]);
+        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 6);
 
-        /**
-         * 1S L  
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::LER, $seleccionaCDA->getDisciplina(), 'S'); 
+        $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
+        ($this->newSeleccionaCDA)($param, 'S', 6);
     }
 }

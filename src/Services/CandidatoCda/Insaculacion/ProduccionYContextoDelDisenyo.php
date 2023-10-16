@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Unidad;
 
 class ProduccionYContextoDelDisenyo {
 
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -23,48 +23,57 @@ class ProduccionYContextoDelDisenyo {
             'claveComisionDictaminadora' => Area::PRODUCCION_Y_CONTEXTO_DEL_DISENYO
         ];        
 
-        for($i =  0; $i < 2; $i++) {
-            /**
-             * 1T A 
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::AZC
+        ]);
+        for($i =  1; $i < 3; $i++) {
+           /**
+             * AZC - 1 T, 1 S  
              */
-            ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T');
+            ($this->newSeleccionaCDA)($param, 'T', $i);
 
-            /**
-             * 1S A 
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'S');
+            ($this->newSeleccionaCDA)($param, 'S', $i);
         }
 
-        for($i =  0; $i < 2; $i++) {
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::XOC
+        ]);
+        for($i =  3; $i < 5; $i++) {
             /**
-             * 1T X 
+             * XOC - 1 T, 1 S  
              */
-            ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T');
+            ($this->newSeleccionaCDA)($param, 'T', $i);
 
-            /**
-             * 1S X 
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S');
+            ($this->newSeleccionaCDA)($param, 'S', $i);
         }
 
-        for($i =  0; $i < 2; $i++) {
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::CUA
+        ]);
+        for($i =  5; $i < 7; $i++) {
             /**
              * 1T C 
              */
-            ($this->seleccionaCDA)($parameters, Unidad::CUA, null, 'T');
+            ($this->newSeleccionaCDA)($param, 'T', $i);
         }
 
         /**
          * 1S A (C)
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'S', [], [], [
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::AZC
+        ]);
+        ($this->newSeleccionaCDA)($param, 'S', 5, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 
         /**
          * 1S X (C)
          */
-        ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S', [], [], [
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::XOC
+        ]);
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 

@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Unidad;
 
 class AnalisisYMetodosDelDisenyo {
 
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -23,28 +23,28 @@ class AnalisisYMetodosDelDisenyo {
             'claveComisionDictaminadora' => Area::ANALISIS_Y_METODOS_DEL_DISENYO
         ];        
 
-        for($i =  0; $i < 3; $i++) {
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::AZC
+        ]);
+        for($i =  1; $i < 4; $i++) {
             /**
-             * 1T A 
+             * AZC - 1 T, 1 S  
              */
-            ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'T');
+            ($this->newSeleccionaCDA)($param, 'T', $i);
 
-            /**
-             * 1S A 
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::AZC, null, 'S');
+            ($this->newSeleccionaCDA)($param, 'S', $i);
         }
 
-        for($i =  0; $i < 3; $i++) {
+        $param = \array_merge($parameters, [
+            'claveUnidad' => Unidad::XOC
+        ]);
+        for($i =  4; $i < 7; $i++) {
             /**
-             * 1T X 
+             * XOC - 1 T, 1 S  
              */
-            ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'T');
+            ($this->newSeleccionaCDA)($param, 'T', $i);
 
-            /**
-             * 1S X 
-             */
-            ($this->seleccionaCDA)($parameters, Unidad::XOC, null, 'S');
+            ($this->newSeleccionaCDA)($param, 'S', $i);
         }
 
        

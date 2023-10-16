@@ -149,6 +149,11 @@ class SeleccionCda
      */
     private $nombreDisciplina;
 
+    /**
+     * @ORM\Column(name="orden_nu", type="integer", nullable=true)
+     */
+    private $orden;
+
     public function getTrimestre(): ?string
     {
         return $this->trimestre;
@@ -474,4 +479,24 @@ class SeleccionCda
         return $this;
     }
 
+
+    /**
+     * Get the value of orden
+     */ 
+    public function getOrden(): ?int
+    {
+        return $this->orden;
+    }
+
+    /**
+     * Set the value of orden
+     *
+     * @return  self
+     */ 
+    public function setOrden(?int $orden): self
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
 }

@@ -2,19 +2,19 @@
 
 namespace App\Services\CandidatoCda\Insaculacion;
 
-use App\Services\CandidatoCda\SeleccionaCDA;
+use App\Services\CandidatoCda\NewSeleccionaCDA;
 use App\Utils\Area;
 use App\Utils\Disciplina;
 use App\Utils\Unidad;
 
 class Ingenieria {
-    private SeleccionaCDA $seleccionaCDA;
+    private NewSeleccionaCDA $newSeleccionaCDA;
 
     public function __construct(
-        SeleccionaCDA $seleccionaCDA
+        NewSeleccionaCDA $newSeleccionaCDA
     )
     {
-        $this->seleccionaCDA = $seleccionaCDA;
+        $this->newSeleccionaCDA = $newSeleccionaCDA;
     }
 
     public function __invoke()
@@ -25,68 +25,80 @@ class Ingenieria {
         ];
 
         /**
-         * 1T A Ingeniería
+         * AZC - 1 T Ingeniería, 1 S Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::INGENIERIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 1);
+
+        ($this->newSeleccionaCDA)($param, 'S', 1);
 
         /**
-         * 1S A Ingeniería
+         * AZC - 1 T Computación, 1 S Computación
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::COMPUTACION,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 2);
+
+        ($this->newSeleccionaCDA)($param, 'S', 2);
 
         /**
-         * 1T A Computación
+         * IZT - 1 T Ingeniería, 1 S Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'T');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::INGENIERIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 3);
+
+        ($this->newSeleccionaCDA)($param, 'S', 3);
+       
+        /**
+         * IZT - 1 T Biomédica, 1 S Biomédica
+         */
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::IZT,
+            'nombreDisciplina' => Disciplina::CIENCIAS_BIOMEDICAS,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 4);
+
+        ($this->newSeleccionaCDA)($param, 'S', 4);
+
 
         /**
-         * 1T A Computación
+         * LER - 1 T Ingeniería, AZC (LER) - 1 S Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::COMPUTACION, 'S');
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::LER,
+            'nombreDisciplina' => Disciplina::INGENIERIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 5);
 
-        /**
-         * 1T I Ingeniería
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'T');
-
-        /**
-         * 1S I Ingeniería
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S');
-
-        /**
-         * 1T A Biomédica
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::CIENCIAS_BIOMEDICAS, 'T');
-
-        /**
-         * 1T A Biomédica
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::CIENCIAS_BIOMEDICAS, 'S');
-
-        /**
-         * 1T L Ingeniería
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::LER, Disciplina::INGENIERIA, 'T');
-
-        /**
-         * 1T L (A) Ingeniería
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::IZT, Disciplina::INGENIERIA, 'S', [], [], [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::INGENIERIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'S', 5, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::LER)
         ]);
 
+
         /**
-         * 1T C (A) Ingeniería
+         * AZC - (CUA) 1 Ingeniería, (CUA) 1 S Ingeniería
          */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'T', [], [], [
+        $param =  array_merge($parameters, [
+            'claveUnidad' =>  Unidad::AZC,
+            'nombreDisciplina' => Disciplina::INGENIERIA,
+        ]);
+        ($this->newSeleccionaCDA)($param, 'T', 6, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 
-        /**
-         * 1T C (I) Ingeniería
-         */
-        ($this->seleccionaCDA)($parameters, Unidad::AZC, Disciplina::INGENIERIA, 'S', [], [], [
+        ($this->newSeleccionaCDA)($param, 'S', 6, [], [], [
             'unidad' => Unidad::getUnidad(Unidad::CUA)
         ]);
 
