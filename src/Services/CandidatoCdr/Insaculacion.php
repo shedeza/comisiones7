@@ -7,11 +7,11 @@ use App\Repository\CandidatoCdrRepository;
 use App\Repository\SeleccionCdrRepository;
 use App\Utils\Division;
 use App\Utils\Unidad;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class Insaculacion {
 
     private $candidatoCdrRepository;
+    private $seleccionCdrRepository;
     
     public function __construct (
         CandidatoCdrRepository $candidatoCdrRepository,

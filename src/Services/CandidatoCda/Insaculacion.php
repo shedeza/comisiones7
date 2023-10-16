@@ -17,15 +17,15 @@ use Symfony\Component\Lock\LockFactory;
 
 class Insaculacion {
 
-    private $cienciasBasicas;
-    private $ingenieria;
-    private $cienciasBiologicas;
-    private $cienciasDeLaSalud;
-    private $cienciasSociales;
-    private $cienciasEconomicoAdministrativas;
-    private $humanidades;
-    private $analisisYMetodosDelDisenyo;
-    private $produccionYContextoDelDisenyo;
+    private CienciasBasicas $cienciasBasicas;
+    private Ingenieria $ingenieria;
+    private CienciasBiologicas $cienciasBiologicas;
+    private CienciasDeLaSalud $cienciasDeLaSalud;
+    private CienciasSociales $cienciasSociales;
+    private CienciasEconomicoAdministrativas $cienciasEconomicoAdministrativas;
+    private Humanidades $humanidades;
+    private AnalisisYMetodosDelDisenyo $analisisYMetodosDelDisenyo;
+    private ProduccionYContextoDelDisenyo $produccionYContextoDelDisenyo;
     private LockFactory $lockFactory;
 
     private $candidatoCdaRepository;
