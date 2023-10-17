@@ -44,9 +44,9 @@ class AnalisisYMetodosDelDisenyo {
              */
             ($this->newSeleccionaCDA)($param, 'T', $i);
 
-        //    if($i < 6) {
+            if($i < 6) {
                 ($this->newSeleccionaCDA)($param, 'S', $i);
-        //    }
+            }
         }
 
         /*
