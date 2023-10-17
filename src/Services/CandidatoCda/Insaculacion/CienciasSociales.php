@@ -122,9 +122,9 @@ class CienciasSociales {
          */
         $param =  array_merge($parameters, [
             'claveUnidad' =>  Unidad::LER,
-            'nombreDisciplina' => Disciplina::POLITICA
+            'nombreDisciplina' => Disciplina::POLITICA,
         ]);
-        $seleccionaCDA = ($this->newSeleccionaCDA)($param, 'T', 6);
+        $seleccionaCDA = ($this->newSeleccionaCDA)(array_merge($param, ['empleado' => 27455]), 'T', 6);
 
         $param['nombreDisciplina'] = $seleccionaCDA->getDisciplina();
         ($this->newSeleccionaCDA)($param, 'S', 6);
