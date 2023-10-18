@@ -30,7 +30,7 @@ class Recaptcha
         );
 
         if($response->getStatusCode() == Response::HTTP_OK) {
-            $arrayResponse =  json_decode($response->getContent(), true);
+            $arrayResponse = json_decode($response->getContent(), true);
             return $arrayResponse['success'];
         }
 
